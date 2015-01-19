@@ -1,3 +1,6 @@
+oro_user:
+    resource: "@OroUserBundle/Resources/config/routing.yml"
+
 app:
     resource: @AppBundle/Controller/
     type:     annotation

@@ -26,27 +26,59 @@ security:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: false
         # the login page has to be accessible for everybody
-        demo_login:
-            pattern:  ^/demo/secured/login$
+        user_login:
+            pattern:  ^/login$
             security: false
 
         # secures part of the application
-        demo_secured_area:
-            pattern:    ^/demo/secured/
-            # it's important to notice that in this case _demo_security_check and _demo_login
-            # are route names and that they are specified in the AcmeDemoBundle
+        user_secured_area:
+            #pattern:    ^/user
+            # it's important to notice that in this case _demo_security_check and user_login
+            # are route names and that they are specified in the OroUserBundle
+            provider: in_memory
             form_login:
-                check_path: _demo_security_check
-                login_path: _demo_login
+                # submit the login form here
+                check_path: /login_check
+
+                # the user is redirected here when they need to log in
+                login_path: /login
+
+                # if true, forward the user to the login form instead of redirecting
+                use_forward: false
+
+                # login success redirecting options (read further below)
+                always_use_default_target_path: false
+                default_target_path:            /
+                target_path_parameter:          _target_path
+                use_referer:                    false
+
+                # login failure redirecting options (read further below)
+                failure_forward: false
+                failure_path_parameter: _failure_path
+
+                # field names for the username and password fields
+                username_parameter: _username
+                password_parameter: _password
+
+                # by default, the login form *must* be a POST, not a GET
+                post_only:   true
+                remember_me: false
+
+                # by default, a session must exist before submitting an authentication request
+                # if false, then Request::hasPreviousSession is not called during authentication
+                # new in Symfony 2.3
+                require_previous_session: true
+
             logout:
-                path:   _demo_logout
-                target: _demo
+                path:   /logout
+                target: /
             #anonymous: ~
             #http_basic:
-            #    realm: "Secured Demo Area"
 
     # with these settings you can restrict or allow access for different parts
     # of your application based on roles, ip, host or methods
     # http://symfony.com/doc/current/cookbook/security/access_control.html
     access_control:
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+         - { path: ^/login$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/user, roles: ROLE_USER }

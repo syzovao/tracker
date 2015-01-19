@@ -1,0 +1,7 @@
+oro_user_homepage:
+    path:     /
+    defaults: { _controller: OroUserBundle:Default:index }
+
+oro_user:
+    resource: "@OroUserBundle/Controller"
+    type:     annotation
