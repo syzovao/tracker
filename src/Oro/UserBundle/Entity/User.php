@@ -3,13 +3,17 @@
 namespace Oro\UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * User
  *
  * @ORM\Table(name="oro_users")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  */
 class User implements UserInterface, \Serializable
 {
@@ -46,19 +50,27 @@ class User implements UserInterface, \Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="avatar", type="string", length=255, nullable=true)
+     * @ORM\Column(name="avatar_path", type="string", length=255, nullable=true)
      */
-    private $avatar;
+    private $avatar_path;
+
+    /**
+     * @var \Symfony\Component\HttpFoundation\File\UploadedFile
+     * @Assert\File(maxSize="5M")
+     */
+    private $avatar_file;
 
     /**
      * @ORM\Column(type="string", length=64)
      */
     private $password;
 
+    private $temp;
+
     /**
-     * @var string
-     *
      * @ORM\Column(name="roles", type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="Role", inversedBy="users")
+     * @ORM\JoinColumn(name="role", referencedColumnName="roles")
      */
     private $roles;
 
@@ -72,14 +84,13 @@ class User implements UserInterface, \Serializable
      */
     public function __construct()
     {
-        //$this->salt = md5(uniqid(null, true));
         $this->salt = null;
     }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -102,7 +113,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get full name
      *
-     * @return string 
+     * @return string
      */
     public function getFullname()
     {
@@ -125,7 +136,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get email
      *
-     * @return string 
+     * @return string
      */
     public function getEmail()
     {
@@ -148,7 +159,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get username
      *
-     * @return string 
+     * @return string
      */
     public function getUsername()
     {
@@ -156,26 +167,36 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set avatar
+     * Set avatar image path
      *
-     * @param string $avatar
+     * @param string $avatarPath
      * @return User
      */
-    public function setAvatar($avatar)
+    public function setAvatarPath($avatarPath)
     {
-        $this->avatar = $avatar;
+        $this->avatar_path = $avatarPath;
 
         return $this;
     }
 
     /**
-     * Get avatar
+     * Get avatar image path
      *
-     * @return string 
+     * @return string
      */
-    public function getAvatar()
+    public function getAvatarPath()
     {
-        return $this->avatar;
+        return $this->avatar_path;
+    }
+
+    /**
+     * Get avatar File
+     *
+     * @return UploadedFile
+     */
+    public function getAvatarFile()
+    {
+        return $this->avatar_file;
     }
 
     /**
@@ -194,7 +215,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get password
      *
-     * @return string 
+     * @return string
      */
     public function getPassword()
     {
@@ -205,24 +226,30 @@ class User implements UserInterface, \Serializable
      * Set roles
      *
      * @param string $roles
-     * @return User
+     * @return $this
      */
     public function setRoles($roles)
     {
-        $this->roles = $roles;
-
+        if (is_object($roles)) {
+            $this->roles = $roles->getRole();
+        } elseif (is_array($roles)) {
+            if (isset($roles['role'])) {
+                $this->roles = $roles['role'];
+            }
+        } else {
+            $this->roles = $roles;
+        }
         return $this;
     }
 
     /**
      * Get roles
      *
-     * @return string 
+     * @return string
      */
     public function getRoles()
     {
-        //return $this->roles;
-        return array('ROLE_USER', 'ROLE_ADMIN', 'ROLE_MANAGER');
+        return $this->roles;
     }
 
     /**
@@ -243,6 +270,7 @@ class User implements UserInterface, \Serializable
     /**
      * Unserialize user
      *
+     * @param string $serialized
      * @return string
      */
     public function unserialize($serialized)
@@ -276,5 +304,124 @@ class User implements UserInterface, \Serializable
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
+    }
+
+    /**
+     * Sets Set avatar File.
+     *
+     * @param UploadedFile $file
+     */
+    public function setAvatarFile(UploadedFile $file = null)
+    {
+        $this->avatar_file = $file;
+        // check if we have an old image path
+        if (is_file($this->getAbsolutePath())) {
+            // store the old name to delete after the update
+            $this->temp = $this->getAbsolutePath();
+        } else {
+            $this->avatar_path = 'initial';
+        }
+    }
+
+    /**
+     * @ORM\PrePersist()
+     * @ORM\PreUpdate()
+     */
+    public function preUpload()
+    {
+        if (null !== $this->getAvatarFile()) {
+            $filename = sha1(uniqid(mt_rand(), true));
+            $this->avatar_path = $filename . '.' . $this->getAvatarFile()->guessExtension();
+        }
+    }
+
+    /**
+     * @ORM\PostPersist()
+     * @ORM\PostUpdate()
+     */
+    public function upload()
+    {
+        if (null === $this->getAvatarFile()) {
+            return;
+        }
+
+        // check if we have an old image
+        if (isset($this->temp)) {
+            // delete the old image
+            unlink($this->temp);
+            // clear the temp image path
+            $this->temp = null;
+        }
+
+        // use the original file name here but you should
+        // sanitize it at least to avoid any security issues
+
+        // move takes the target directory and then the
+        // target filename to move to
+        $this->getAvatarFile()->move(
+            $this->getUploadRootDir(),
+            $this->getAvatarFile()->getClientOriginalName()
+        );
+
+        // set the path property to the filename where you've saved the file
+        $this->avatar_path = $this->getAvatarFile()->getClientOriginalName();
+
+        $this->setAvatarFile(null);
+    }
+
+    /**
+     * @ORM\PreRemove()
+     */
+    public function storeFilenameForRemove()
+    {
+        $this->temp = $this->getAbsolutePath();
+    }
+
+    /**
+     * @ORM\PostRemove()
+     */
+    public function removeUpload()
+    {
+        if (isset($this->temp)) {
+            unlink($this->temp);
+        }
+    }
+
+    public function getAbsolutePath()
+    {
+        return null === $this->avatar_path
+            ? null
+            : $this->getUploadRootDir() . '/' . $this->avatar_path;
+    }
+
+    public function getWebPath()
+    {
+        return null === $this->avatar_path
+            ? null
+            : $this->getUploadDir() . '/' . $this->avatar_path;
+    }
+
+    protected function getUploadRootDir()
+    {
+        // the absolute directory path where uploaded
+        // documents should be saved
+        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
+    }
+
+    protected function getUploadDir()
+    {
+        // get rid of the __DIR__ so it doesn't screw up
+        // when displaying uploaded doc/image in the view.
+        return 'uploads/user/images';
+    }
+
+    public function getAvatarImagePath($size = 100)
+    {
+        if (!empty($this->getAvatarPath())) {
+            $imagePath = $this->getUploadDir() . '/' . $this->avatar_path;
+        } else {
+            $imagePath = $this->getUploadDir() . '/default/placeholder' . $size . '.jpg';
+        }
+        return $imagePath;
     }
 }
