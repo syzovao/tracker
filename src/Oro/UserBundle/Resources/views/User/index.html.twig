@@ -1,7 +1,31 @@
-{% extends "::base.html.twig" %}
+{% extends 'base.html.twig' %}
 
 {% block title %}OroUserBundle:User:index{% endblock %}
 
 {% block body %}
 <h1>Welcome to the User:index page</h1>
+<p><a href="{{ path('oro_user_create')}}">Create New User</a></p>
+    <table>
+        <tr>
+            <td>Id</td>
+            <td>Name</td>
+            <td>Email</td>
+            <td>Full Name</td>
+            <td>Role</td>
+            <td>Avatar</td>
+            <td colspan="2">Actions</td>
+        </tr>
+    {% for user in users %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.fullname }}</td>
+            <td>{{ user.roles }}</td>
+            <td><img height="50" width="50" src="{{ asset(user.getAvatarImagePath) }}" /></td>
+            <td><a href="{{ path('oro_user_update', {'id': user.id}) }}">Edit</a></td>
+            <td><a href="{{ path('oro_user_view', {'id': user.id}) }}">View</a></td>
+        </tr>
+    {% endfor %}
+        </table>
 {% endblock %}

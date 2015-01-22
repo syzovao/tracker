@@ -5,6 +5,7 @@ namespace Oro\UserBundle\Entity;
 use Symfony\Component\Security\Core\Role\RoleInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Oro\UserBundle\Entity\User;
 
 /**
  * Role
@@ -40,7 +41,7 @@ class Role
     /**
      * @var string
      *
-     * @ORM\ManyToMany(targetEntity="User", mappedBy="roles")
+     * @ORM\OneToMany(targetEntity="User", mappedBy="roles")
      */
     private $users;
 
@@ -83,19 +84,6 @@ class Role
     }
 
     /**
-     * Set role
-     *
-     * @param string $role
-     * @return Role
-     */
-    public function setRole($role)
-    {
-        $this->role = $role;
-
-        return $this;
-    }
-
-    /**
      * Get role
      *
      * @return string 
@@ -121,11 +109,24 @@ class Role
     /**
      * Get users
      *
-     * @return string 
+     * @return string
      */
     public function getUsers()
     {
         return $this->users;
+    }
+
+    /**
+     * Set role
+     *
+     * @param string $role
+     * @return Role
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+
+        return $this;
     }
 
     /**
@@ -134,7 +135,7 @@ class Role
      * @param \Oro\UserBundle\Entity\User $users
      * @return Role
      */
-    public function addUser(\Oro\UserBundle\Entity\User $users)
+    public function addUser(User $users)
     {
         $this->users[] = $users;
 
@@ -146,7 +147,7 @@ class Role
      *
      * @param \Oro\UserBundle\Entity\User $users
      */
-    public function removeUser(\Oro\UserBundle\Entity\User $users)
+    public function removeUser(User $users)
     {
         $this->users->removeElement($users);
     }

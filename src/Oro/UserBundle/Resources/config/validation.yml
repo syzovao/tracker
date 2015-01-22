@@ -1,0 +1,16 @@
+Oro\UserBundle\Entity\User:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            { fields: email, message: 'This email is already in use.' }
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            { fields: username, message: 'This username is already in use.' }
+    properties:
+        email:
+            - NotBlank: { message: "user.email.not_blank" }
+        password:
+            - NotBlank: ~
+        username:
+            - NotBlank: ~
+        avatar_file:
+            - File:
+                maxSize: 6000000

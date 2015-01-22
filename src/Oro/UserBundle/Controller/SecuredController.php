@@ -18,7 +18,6 @@ class SecuredController extends Controller
      */
     public function loginAction()
     {
-        //Request $request
         $helper = $this->get('security.authentication_utils');
 
         return $this->render('OroUserBundle:Secured:login.html.twig', array(

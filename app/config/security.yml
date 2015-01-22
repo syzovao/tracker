@@ -4,10 +4,13 @@ security:
     # http://symfony.com/doc/current/book/security.html#encoding-the-user-s-password
     encoders:
         Symfony\Component\Security\Core\User\User: plaintext
+        Oro\UserBundle\Entity\User:
+            algorithm: bcrypt
 
     # http://symfony.com/doc/current/book/security.html#hierarchical-roles
     role_hierarchy:
-        ROLE_ADMIN:       ROLE_USER
+        ROLE_ADMIN:       ROLE_USER, ROLE_MANAGER
+        ROLE_MANAGER:     ROLE_USER
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
@@ -17,6 +20,7 @@ security:
                 users:
                     user:  { password: userpass, roles: [ 'ROLE_USER' ] }
                     admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+                    manager: { password: managerpass, roles: [ 'ROLE_MANAGER' ] }
 
     # the main part of the security, where you can set up firewalls
     # for specific sections of your app
@@ -32,7 +36,7 @@ security:
 
         # secures part of the application
         user_secured_area:
-            #pattern:    ^/user
+            # pattern:    ^/
             # it's important to notice that in this case _demo_security_check and user_login
             # are route names and that they are specified in the OroUserBundle
             provider: in_memory

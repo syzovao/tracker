@@ -1,7 +1,16 @@
-{% extends "::base.html.twig" %}
+{% extends 'base.html.twig' %}
 
 {% block title %}OroUserBundle:User:update{% endblock %}
 
 {% block body %}
 <h1>Welcome to the User:update page</h1>
+    {% for error in errors %}
+        <li>{{ error.message }}</li>
+    {% endfor %}
+
+    {{ form_start(form, {'attr': {'class': 'my-form-class'} }) }}
+    {{ form_rest(form) }}
+    {{ form_errors(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
 {% endblock %}

@@ -1,7 +1,17 @@
-{% extends "::base.html.twig" %}
-
+{% extends 'base.html.twig' %}
 {% block title %}OroUserBundle:User:view{% endblock %}
-
 {% block body %}
-<h1>Welcome to the User:view page</h1>
+    <h1>Welcome to the User:view page</h1>
+    <p><a href="{{ path('oro_user_update', {'id': user.id}) }}">Edit</a>|
+        <a href="{{ path('oro_user_user_index') }}">All Users</a>
+    </p>
+    <h2>{{ user.fullname }}</h2>
+    <p>Email: {{ user.email }}</p>
+    <p>Username: {{ user.username }}</p>
+    <p>Role: {{ user.roles }}</p>
+    <p>Avatar: {{ user.avatarPath }} </p>
+    <div class="illustration">
+        <img height="150" width="150" src="{{ asset(user.getAvatarImagePath(150)) }}" />
+    </div>
+
 {% endblock %}
