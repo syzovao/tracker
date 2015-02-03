@@ -68,11 +68,11 @@ class User implements UserInterface, \Serializable
     private $temp;
 
     /**
-     * @ORM\Column(name="roles", type="string", length=255)
+     * @ORM\Column(name="role", type="string", length=255)
      * @ORM\ManyToOne(targetEntity="Role", inversedBy="users")
-     * @ORM\JoinColumn(name="role", referencedColumnName="roles")
+     * @ORM\JoinColumn(name="role", referencedColumnName="role")
      */
-    private $roles;
+    private $role;
 
     /**
      * @var string
@@ -223,33 +223,46 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set roles
+     * Returns the array of roles
      *
-     * @param string $roles
-     * @return $this
-     */
-    public function setRoles($roles)
-    {
-        if (is_object($roles)) {
-            $this->roles = $roles->getRole();
-        } elseif (is_array($roles)) {
-            if (isset($roles['role'])) {
-                $this->roles = $roles['role'];
-            }
-        } else {
-            $this->roles = $roles;
-        }
-        return $this;
-    }
-
-    /**
-     * Get roles
-     *
-     * @return string
+     * @return array
+     * @return Role[] The user roles
      */
     public function getRoles()
     {
-        return $this->roles;
+        if (!is_array($this->role)) {
+            return array($this->role);
+        }
+        return $this->role;
+    }
+
+    /**
+     * Set role
+     *
+     * @param string $role
+     */
+    public function setRole($role)
+    {
+        if (is_object($role)) {
+            $data = $role->getRole();
+        } elseif (is_array($role)) {
+            if (isset($role['role'])) {
+                $data = $role['role'];
+            }
+        } else {
+            $data = $role;
+        }
+        $this->role = $data;
+    }
+
+    /**
+     * Get role
+     *
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
     }
 
     /**

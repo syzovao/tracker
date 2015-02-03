@@ -41,7 +41,7 @@ class Role
     /**
      * @var string
      *
-     * @ORM\OneToMany(targetEntity="User", mappedBy="roles")
+     * @ORM\OneToMany(targetEntity="User", mappedBy="role")
      */
     private $users;
 

@@ -14,13 +14,16 @@ security:
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+#    providers:
+#        in_memory:
+#            memory:
+#                users:
+#                    user:  { password: userpass, roles: [ 'ROLE_USER' ] }
+#                    admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+#                    manager: { password: managerpass, roles: [ 'ROLE_MANAGER' ] }
     providers:
-        in_memory:
-            memory:
-                users:
-                    user:  { password: userpass, roles: [ 'ROLE_USER' ] }
-                    admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
-                    manager: { password: managerpass, roles: [ 'ROLE_MANAGER' ] }
+        administrators:
+            entity: { class: OroUserBundle:User, property: username }
 
     # the main part of the security, where you can set up firewalls
     # for specific sections of your app
@@ -39,7 +42,8 @@ security:
             # pattern:    ^/
             # it's important to notice that in this case _demo_security_check and user_login
             # are route names and that they are specified in the OroUserBundle
-            provider: in_memory
+            #provider: in_memory
+            provider: administrators
             form_login:
                 # submit the login form here
                 check_path: /login_check

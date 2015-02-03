@@ -32,7 +32,8 @@ class UserType extends AbstractType
             ->add('avatar_path', 'hidden')
             ->add('password', 'password');
         $choices = $this->getRolesChoices();
-        $builder->add('roles', 'choice', array(
+        $builder->add('role', 'choice', array(
+            'label' => 'Role:',
             'choices' => $choices
         ));
         $builder->add('avatar_file', 'file', array('required' => false));

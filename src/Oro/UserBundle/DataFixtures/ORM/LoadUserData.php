@@ -60,7 +60,7 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface
             ->setEmail('manager@tracker.com')
             ->setUsername('manager')
             ->setFullname('Barsik')
-            ->setRoles($roleManager->getRole());
+            ->setRole($roleManager->getRole());
         $encoder = $this->container
             ->get('security.encoder_factory')
             ->getEncoder($userManager);
@@ -78,7 +78,7 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface
             ->setEmail('user@tracker.com')
             ->setUsername('user')
             ->setFullname('Plusha')
-            ->setRoles($roleUser->getRole());
+            ->setRole($roleUser->getRole());
         $encoder = $this->container
             ->get('security.encoder_factory')
             ->getEncoder($user);
