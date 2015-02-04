@@ -3,11 +3,27 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        {% if app.security.token %}
+            Welcome, {{ app.security.token.user.username }}!
+        {% endif %}
+
+        {% stylesheets '@bootstrap_css' %}
+            <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
+        {% endstylesheets %}
+            <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        {% javascripts '@jquery' '@bootstrap_js' %}
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+
+    {% if app.security.token %}
+    {% block menu %}
+        {{ knp_menu_render('AppBundle:Builder:mainMenu', {'depth': 2, 'currentClass': 'active', 'matchingDepth': 2 }) }}
+    {% endblock %}
+    {% endif %}
+        {% block body %}
+        {% endblock %}
         {% block javascripts %}{% endblock %}
     </body>
 </html>

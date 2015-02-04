@@ -51,7 +51,10 @@ class UserType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Oro\UserBundle\Entity\User'
+            'data_class' => 'Oro\UserBundle\Entity\User',
+            'attr' => array(
+                'class' => 'form-horizontal-from-default'
+            )
         ));
     }
 

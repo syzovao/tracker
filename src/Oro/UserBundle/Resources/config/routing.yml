@@ -1,5 +1,5 @@
-oro_user_homepage:
-    path:     /
+oro_user_index:
+    path:     /index
     defaults: { _controller: OroUserBundle:Default:index }
 
 oro_user:

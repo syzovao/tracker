@@ -19,7 +19,7 @@ class UserController extends Controller
     /**
      * Show accounts list action
      *
-     * @Route("/")
+     * @Route("/", name="oro_user_index")
      * @Template("OroUserBundle:User:index.html.twig")
      */
     public function indexAction()
