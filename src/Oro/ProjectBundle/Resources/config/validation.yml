@@ -1,0 +1,9 @@
+Oro\ProjectBundle\Entity\Project:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            { fields: code, message: 'This code is already in use.' }
+    properties:
+        code:
+            - NotBlank: ~
+        name:
+            - NotBlank: ~

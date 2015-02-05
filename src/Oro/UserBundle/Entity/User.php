@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
+use Oro\ProjectBundle\Entity\Project;
 
 /**
  * User
@@ -68,11 +69,21 @@ class User implements UserInterface, \Serializable
     private $temp;
 
     /**
+     * @var string
+     *
      * @ORM\Column(name="role", type="string", length=255)
      * @ORM\ManyToOne(targetEntity="Role", inversedBy="users")
      * @ORM\JoinColumn(name="role", referencedColumnName="role")
      */
     private $role;
+
+    /**
+     * @var ArrayCollection Project[]
+     *
+     * @ORM\ManyToMany(targetEntity="Oro\ProjectBundle\Entity\Project", mappedBy="users")
+     * @ORM\JoinTable(name="oro_user_projects")
+     **/
+    private $projects;
 
     /**
      * @var string
@@ -84,6 +95,7 @@ class User implements UserInterface, \Serializable
      */
     public function __construct()
     {
+        $this->projects = new ArrayCollection();
         $this->salt = null;
     }
 
@@ -243,6 +255,7 @@ class User implements UserInterface, \Serializable
      */
     public function setRole($role)
     {
+        $data = '';
         if (is_object($role)) {
             $data = $role->getRole();
         } elseif (is_array($role)) {
@@ -436,5 +449,38 @@ class User implements UserInterface, \Serializable
             $imagePath = $this->getUploadDir() . '/default/placeholder' . $size . '.jpg';
         }
         return $imagePath;
+    }
+
+    /**
+     * Add projects
+     *
+     * @param \Oro\ProjectBundle\Entity\Project $projects
+     * @return User
+     */
+    public function addProject(Project $projects)
+    {
+        $this->projects[] = $projects;
+
+        return $this;
+    }
+
+    /**
+     * Remove projects
+     *
+     * @param \Oro\ProjectBundle\Entity\Project $projects
+     */
+    public function removeProject(Project $projects)
+    {
+        $this->projects->removeElement($projects);
+    }
+
+    /**
+     * Get projects
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProjects()
+    {
+        return $this->projects;
     }
 }

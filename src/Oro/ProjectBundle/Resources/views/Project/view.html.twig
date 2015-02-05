@@ -1,0 +1,46 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1 class="page-header">Project</h1>
+    <ul class="nav nav-pills">
+        <li role="presentation"><a href="{{ path('oro_project_update', { 'id': entity.id }) }}">Edit</a></li>
+        <li>{{ form(delete_form) }}</li>
+    </ul>
+    <div class="row">
+        <div class="col-md-9">
+            <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ entity.id }}</td>
+                </tr>
+                <tr>
+                    <th>Code</th>
+                    <td>{{ entity.code }}</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td>{{ entity.name }}</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>{{ entity.description }}</td>
+                </tr>
+                <tr>
+                    <th>Users</th>
+                    <td>
+                        <ul>
+                            {% for user in entity.users %}
+                                <li><a href="{{ path('oro_user_view', { 'id': user.id }) }}">{{ user.username}}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <ul class="record_actions list-inline">
+        <li><a href="{{ path('oro_project') }}">Back to the list</a></li>
+    </ul>
+{% endblock %}
