@@ -3,8 +3,10 @@
 {% block title %}OroUserBundle:User:create{% endblock %}
 
 {% block body %}
-    <h1>Welcome to the User:create page</h1>
-
+    <h1 class="page-header">Welcome to the User:create page</h1>
+    <ul class="nav nav-pills">
+        <li><a href="{{ path('oro_user_index') }}">Users list</a></li>
+    </ul>
     {{ form_start(form) }}
     {{ form_errors(form) }}
     {{ form_widget(form) }}

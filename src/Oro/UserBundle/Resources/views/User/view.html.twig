@@ -1,21 +1,24 @@
 {% extends '::base.html.twig' %}
 {% block title %}OroUserBundle:User:view{% endblock %}
 {% block body %}
-<section class="section">
-    <h1>Welcome to the User:view page</h1>
-    <p><a href="{{ path('oro_user_update', {'id': user.id}) }}">Edit</a>|
-        <a href="{{ path('oro_user_index') }}">All Users</a>
-    </p>
-
-<div class="container">
-    <h2>{{ user.fullname }}</h2>
-    <p>Email: {{ user.email }}</p>
-    <p>Username: {{ user.username }}</p>
-    <p>Role: {{ user.role }}</p>
-    <p>Avatar: {{ user.avatarPath }} </p>
-    <div class="illustration">
-        <img height="150" width="150" src="{{ asset(user.getAvatarImagePath(150)) }}" />
+    <h1 class="page-header">Welcome to the User:view page</h1>
+    <ul class="nav nav-pills">
+        <li><a href="{{ path('oro_user_update', {'id': user.id}) }}">Edit</a></li>
+    </ul>
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">{{ user.fullname }}</div>
+        <div class="panel-body">
+            <p>Email: {{ user.email }}</p>
+            <p>Username: {{ user.username }}</p>
+            <p>Role: {{ user.role }}</p>
+            <p>Avatar: {{ user.avatarPath }} </p>
+            <div class="illustration">
+                <img height="150" width="150" src="{{ asset(user.getAvatarImagePath(150)) }}" />
+            </div>
+        </div>
     </div>
-</div>
-</section>
+    <ul class="record_actions list-inline">
+        <li><a href="{{ path('oro_user_index') }}">Back to the list</a></li>
+    </ul>
 {% endblock %}

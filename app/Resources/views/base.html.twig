@@ -1,29 +1,32 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% if app.security.token %}
-            Welcome, {{ app.security.token.user.username }}!
-        {% endif %}
-
-        {% stylesheets '@bootstrap_css' %}
-            <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
-        {% endstylesheets %}
-            <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-        {% javascripts '@jquery' '@bootstrap_js' %}
-            <script type="text/javascript" src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-    </head>
-    <body>
-
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Oro Tracking{% endblock %}</title>
     {% if app.security.token %}
+        Welcome, {{ app.security.token.user.username }}!
+    {% endif %}
+
+    {% stylesheets '@bootstrap_css' %}
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ asset_url }}"/>
+    {% endstylesheets %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('black_cat.ico') }}" />
+    {% javascripts '@jquery' '@bootstrap_js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+</head>
+<body>
+
+{% if app.security.token %}
     {% block menu %}
         {{ knp_menu_render('AppBundle:Builder:mainMenu', {'depth': 2, 'currentClass': 'active', 'matchingDepth': 2 }) }}
     {% endblock %}
-    {% endif %}
-        {% block body %}
-        {% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+{% endif %}
+<div class="container">
+    <div class="row">
+        {% block body %}{% endblock %}
+    </div>
+</div>
+{% block javascripts %}{% endblock %}
+</body>
 </html>
