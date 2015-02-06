@@ -21,6 +21,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Oro\ProjectBundle\OroProjectBundle(),
+            new Oro\IssueBundle\OroIssueBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

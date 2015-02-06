@@ -5,6 +5,7 @@ namespace Oro\ProjectBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Oro\UserBundle\Entity\User;
+use Oro\IssueBundle\Entity\Issue;
 
 /**
  * Project
@@ -53,7 +54,14 @@ class Project
      * inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")}
      * )
      **/
-    private $users;
+    protected $users;
+
+    /**
+     * @var ArrayCollection Issue[]
+     *
+     * @ORM\OneToMany(targetEntity="Oro\IssueBundle\Entity\Issue", mappedBy="project")
+     **/
+    protected $issues;
 
     /**
      * Constructor
@@ -61,6 +69,7 @@ class Project
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->issues = new ArrayCollection();
     }
 
     /**
@@ -183,5 +192,38 @@ class Project
     public function removeUser(User $users)
     {
         $this->users->removeElement($users);
+    }
+
+    /**
+     * Add issues
+     *
+     * @param \Oro\IssueBundle\Entity\Issue $issues
+     * @return Project
+     */
+    public function addIssue(Issue $issues)
+    {
+        $this->issues[] = $issues;
+
+        return $this;
+    }
+
+    /**
+     * Remove issues
+     *
+     * @param \Oro\IssueBundle\Entity\Issue $issues
+     */
+    public function removeIssue(Issue $issues)
+    {
+        $this->issues->removeElement($issues);
+    }
+
+    /**
+     * Get issues
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getIssues()
+    {
+        return $this->issues;
     }
 }

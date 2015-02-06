@@ -1,0 +1,3 @@
+oro_issue:
+    resource: "@OroIssueBundle/Controller"
+    type:     annotation

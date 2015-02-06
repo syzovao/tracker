@@ -41,7 +41,7 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface
             ->setEmail('admin@tracker.com')
             ->setUsername('admin')
             ->setFullname('Bruce')
-            ->setRoles($roleAdmin->getRole());
+            ->setRole($roleAdmin->getRole());
         $encoder = $this->container
             ->get('security.encoder_factory')
             ->getEncoder($userAdmin);
@@ -86,5 +86,16 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface
         $manager->persist($user);
 
         $manager->flush();
+    }
+
+    /**
+     * The order in which fixtures will be loaded
+     * {@inheritDoc}
+     *
+     * @return int
+     */
+    public function getOrder()
+    {
+        return 1;
     }
 }
