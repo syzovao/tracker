@@ -12,6 +12,7 @@ use Oro\UserBundle\Entity\User;
  *
  * @ORM\Table(name="oro_issue")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  */
 class Issue
 {
@@ -78,9 +79,10 @@ class Issue
     private $issueResolution;
 
     /**
-     * @var string
+     * @var User
      *
-     * @ORM\Column(name="reporter_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="Oro\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="reporter_id", referencedColumnName="id", onDelete="SET NULL")
      */
     private $reporter;
 
@@ -93,10 +95,14 @@ class Issue
     private $assignee;
 
     /**
-     * @var string
+     * @var ArrayCollection User[]
      *
-     * @ORM\Column(name="collaborators", type="string", length=255)
-     */
+     * @ORM\ManyToMany(targetEntity="Oro\UserBundle\Entity\User")
+     * @ORM\JoinTable(name="oro_issue_collaborators",
+     *      joinColumns={@ORM\JoinColumn(name="issue_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
+     *      )
+     **/
     private $collaborators;
 
     /**
@@ -123,24 +129,33 @@ class Issue
     private $project;
 
     /**
-     * @var \DateTime
+     * @var \DateTime $createdAt
      *
-     * @ORM\Column(name="createdAt", type="datetime")
+     * @ORM\Column(name="createdAt", type="datetime", nullable=false)
      */
     private $createdAt;
 
     /**
-     * @var \DateTime
+     * @var \DateTime $updatedAt
      *
      * @ORM\Column(name="updatedAt", type="datetime")
      */
     private $updatedAt;
 
     /**
+     * @var ArrayCollection Comment[]
+     *
+     * @ORM\OneToMany(targetEntity="Oro\IssueBundle\Entity\IssueComment", mappedBy="issue")
+     */
+    protected $comments;
+
+    /**
      * Constructor
      */
     public function __construct() {
         $this->children = new ArrayCollection();
+        $this->collaborators = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     /**
@@ -248,7 +263,7 @@ class Issue
     /**
      * Set assignee
      *
-     * @param integer $assignee
+     * @param User $assignee
      * @return Issue
      */
     public function setAssignee($assignee)
@@ -261,7 +276,7 @@ class Issue
     /**
      * Get assignee
      *
-     * @return integer 
+     * @return User
      */
     public function getAssignee()
     {
@@ -289,6 +304,30 @@ class Issue
     public function getCollaborators()
     {
         return $this->collaborators;
+    }
+
+    /**
+     * Add collaborators
+     *
+     * @param \Oro\UserBundle\Entity\User $user
+     * @return Issue
+     */
+    public function addCollaborator(User $user)
+    {
+        if (!$this->getCollaborators()->contains($user)) {
+            $this->getCollaborators()->add($user);
+        }
+        return $this;
+    }
+
+    /**
+     * Remove collaborators
+     *
+     * @param \Oro\UserBundle\Entity\User $user
+     */
+    public function removeCollaborator(User $user)
+    {
+        $this->collaborators->removeElement($user);
     }
 
     /**
@@ -340,13 +379,13 @@ class Issue
     /**
      * Set createdAt
      *
-     * @param \DateTime $createdAt
+     * @ORM\PrePersist
      * @return Issue
      */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt()
     {
-        $this->createdAt = $createdAt;
-
+        $this->createdAt = new \DateTime('now', new \DateTimeZone('UTC'));
+        $this->updatedAt = new \DateTime('now', new \DateTimeZone('UTC'));
         return $this;
     }
 
@@ -363,13 +402,12 @@ class Issue
     /**
      * Set updatedAt
      *
-     * @param \DateTime $updatedAt
+     * @ORM\PrePersist
      * @return Issue
      */
-    public function setUpdatedAt($updatedAt)
+    public function setUpdatedAt()
     {
-        $this->updatedAt = $updatedAt;
-
+        $this->updatedAt = new \DateTime('now', new \DateTimeZone('UTC'));
         return $this;
     }
 
@@ -519,5 +557,48 @@ class Issue
     public function removeChild(Issue $children)
     {
         $this->children->removeElement($children);
+    }
+
+    /**
+     * Get string value
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getCode();
+    }
+
+    /**
+     * Add comments
+     *
+     * @param \Oro\IssueBundle\Entity\IssueComment $comments
+     * @return Issue
+     */
+    public function addComment(IssueComment $comments)
+    {
+        $this->comments[] = $comments;
+
+        return $this;
+    }
+
+    /**
+     * Remove comments
+     *
+     * @param \Oro\IssueBundle\Entity\IssueComment $comments
+     */
+    public function removeComment(IssueComment $comments)
+    {
+        $this->comments->removeElement($comments);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return ArrayCollection Comment[]
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 }

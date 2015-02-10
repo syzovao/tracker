@@ -3,6 +3,7 @@
 {% block body -%}
     <h1 class="page-header">Project</h1>
     <ul class="nav nav-pills">
+        <li role="presentation"><a href="{{ path('oro_project_create')}}"> Create</a></li>
         <li role="presentation"><a href="{{ path('oro_project_update', { 'id': entity.id }) }}">Edit</a></li>
         <li>{{ form(delete_form) }}</li>
     </ul>

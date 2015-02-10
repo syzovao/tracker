@@ -483,4 +483,14 @@ class User implements UserInterface, \Serializable
     {
         return $this->projects;
     }
+
+    /**
+     * Get string value of name
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getUsername();
+    }
 }

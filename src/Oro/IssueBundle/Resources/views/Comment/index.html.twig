@@ -1,0 +1,17 @@
+<h3>Comments</h3>
+<ul class="list-group">
+    {% for entity in entity.comments %}
+        <li class="list-group-item">
+            <span class="glyphicon glyphicon-comment"></span>
+            Posted by <a href="{{ path('oro_user_view', { 'id': entity.user.id }) }}">{{ entity.user}}</a>
+            at {% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}
+            <div class="pull-right">
+                <a href="{{ path('oro_comment_update', { 'id': entity.id }) }}">edit</a>
+                {% if is_granted('ROLE_ADMIN') %}
+                    | <a href="{{ path('oro_comment_delete', { 'id': entity.id }) }}">delete</a>
+                {% endif %}
+            </div>
+            <p>{{ entity.content }}</p>
+        </li>
+    {% endfor %}
+</ul>

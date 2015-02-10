@@ -2,7 +2,6 @@
 
 namespace Oro\UserBundle\Entity;
 
-use Symfony\Component\Security\Core\Role\RoleInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

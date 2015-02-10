@@ -116,4 +116,14 @@ class IssueStatus
     {
         return $this->priority;
     }
+
+    /**
+     * Get string value of status name
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->name;
+    }
 }

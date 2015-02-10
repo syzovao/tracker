@@ -1,0 +1,67 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1 class="page-header">Issue</h1>
+    <ul class="nav nav-pills">
+        <li role="presentation"><a href="{{ path('oro_issue_create')}}"> Create</a></li>
+        <li role="presentation"><a href="{{ path('oro_issue_update', { 'id': entity.id }) }}">Edit</a></li>
+        <li>{{ form(delete_form) }}</li>
+    </ul>
+    <div class="row">
+        <div class="col-md-9">
+            <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ entity.id }}</td>
+                </tr>
+                <tr>
+                    <th>Code</th>
+                    <td>{{ entity.code }}</td>
+                </tr>
+                <tr>
+                    <th>Summary</th>
+                    <td>{{ entity.summary }}</td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td>{{ entity.description }}</td>
+                </tr>
+                <tr>
+                    <th>Reporter</th>
+                    <td>{{ entity.reporter }}</td>
+                </tr>
+                <tr>
+                    <th>Assignee</th>
+                    <td>{{ entity.assignee }}</td>
+                </tr>
+                <tr>
+                    <th>Collaborators</th>
+                    <td>
+                        <ul>
+                            {% for user in entity.collaborators %}
+                                <li><a href="{{ path('oro_user_view', { 'id': user.id }) }}">{{ user.username}}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Created at</th>
+                    <td>{{ entity.createdAt|date('Y-m-d H:i:s') }}</td>
+                </tr>
+                <tr>
+                    <th>Updated at</th>
+                    <td>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</td>
+                </tr>
+                </tbody>
+            </table>
+
+            {% include 'OroIssueBundle:Comment:index.html.twig' with { 'comments': entity.comments } %}
+            {{ render(controller('OroIssueBundle:Comment:create', {'issueId' : entity.id})) }}
+
+        </div>
+    </div>
+    <ul class="record_actions list-inline">
+        <li><a href="{{ path('oro_issue') }}">Back to the list</a></li>
+    </ul>
+{% endblock %}

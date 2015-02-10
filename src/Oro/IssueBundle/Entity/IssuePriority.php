@@ -116,4 +116,14 @@ class IssuePriority
     {
         return $this->priority;
     }
+
+    /**
+     * Get string value of Priority name
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->name;
+    }
 }

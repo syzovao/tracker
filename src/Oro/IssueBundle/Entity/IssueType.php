@@ -115,4 +115,14 @@ class IssueType
     {
         return $this->priority;
     }
+
+    /**
+     * Get string value of type name
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->name;
+    }
 }

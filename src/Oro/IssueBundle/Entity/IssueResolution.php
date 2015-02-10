@@ -116,4 +116,14 @@ class IssueResolution
     {
         return $this->priority;
     }
+
+    /**
+     * Get string value of resolution name
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->name;
+    }
 }

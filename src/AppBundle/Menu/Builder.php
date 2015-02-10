@@ -68,6 +68,28 @@ class Builder extends ContainerAware
             ->setChildrenAttributes(array('class' => 'dropdown-menu', 'role' => 'menu'));
         $menu['Projects']->addChild('Projects list', array('route' => 'oro_project'));
         $menu['Projects']->addChild('Create Project', array('route' => 'oro_project_create'));
+
+        $menu->addChild('Issues', array(
+            'route' => 'oro_issue',
+            'extras' => array(
+                'routes' => array(
+                    array('route' => 'oro_issue_create'),
+                    array('route' => 'oro_issue_view'),
+                    array('route' => 'oro_issue_update')
+                )
+            ),
+            'linkAttributes' => array(
+                'class' => 'dropdown-toggle',
+                'data-toggle' => 'dropdown',
+                'role' => 'link',
+                'aria-expanded' => false
+            )
+        ))
+            ->setAttribute('class', 'dropdown')
+            ->setChildrenAttributes(array('class' => 'dropdown-menu', 'role' => 'menu'));
+        $menu['Issues']->addChild('My Issues', array('route' => 'oro_issue'));
+        $menu['Issues']->addChild('Create Issue', array('route' => 'oro_issue_create'));
+
         $menu->addChild('Log out', array('route' => 'logout'));
 
         return $menu;

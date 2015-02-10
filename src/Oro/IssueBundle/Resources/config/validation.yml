@@ -1,0 +1,21 @@
+Oro\IssueBundle\Entity\Issue:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            { fields: code, message: 'This code is already in use.' }
+    properties:
+        code:
+            - NotBlank: ~
+        summary:
+            - NotBlank: ~
+        createdAt:
+            - NotBlank: ~
+            - Type: \DateTime
+        project:
+            - NotBlank: ~
+Oro\IssueBundle\Entity\IssueComment:
+    properties:
+        content:
+            - NotBlank: ~
+        createdAt:
+            - NotBlank: ~
+            - Type: \DateTime

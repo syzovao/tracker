@@ -2,6 +2,7 @@
 
 namespace Oro\ProjectBundle\Controller;
 
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -191,7 +192,6 @@ class ProjectController extends Controller
     /**
      * Creates a form to delete a Project entity by id.
      *
-     * @ param mixed $id The entity id
      * @param Project $entity
      *
      * @return \Symfony\Component\Form\Form The form

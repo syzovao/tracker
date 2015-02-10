@@ -1,0 +1,18 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1 class="page-header">Issue edit</h1>
+    <ul class="nav nav-pills">
+        <li>{{ form(delete_form) }}</li>
+    </ul>
+
+    {{ form_start(edit_form) }}
+    {{ form_rest(edit_form) }}
+    {{ form_errors(edit_form) }}
+    {{ form_widget(edit_form) }}
+    {{ form_end(edit_form) }}
+
+    <ul class="record_actions list-inline">
+        <li><a href="{{ path('oro_issue') }}">Back to the list</a></li>
+    </ul>
+{% endblock %}

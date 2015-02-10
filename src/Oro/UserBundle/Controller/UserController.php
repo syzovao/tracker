@@ -2,14 +2,14 @@
 
 namespace Oro\UserBundle\Controller;
 
-use Oro\UserBundle\Entity\User;
-use Oro\UserBundle\Form\UserType;
-
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
+use Oro\UserBundle\Entity\User;
+use Oro\UserBundle\Form\UserType;
 
 /**
  * @Route("/user")

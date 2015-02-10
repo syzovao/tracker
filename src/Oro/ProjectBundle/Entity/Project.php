@@ -39,8 +39,6 @@ class Project
     private $name;
 
     /**
-     * @var text
-     *
      * @ORM\Column(name="description", type="text")
      */
     private $description;
@@ -50,8 +48,8 @@ class Project
      *
      * @ORM\ManyToMany(targetEntity="Oro\UserBundle\Entity\User", inversedBy="projects")
      * @ORM\JoinTable(name="oro_user_projects",
-     * joinColumns={@ORM\JoinColumn(name="project_id", referencedColumnName="id", onDelete="CASCADE")},
-     * inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")}
+     *     joinColumns={@ORM\JoinColumn(name="project_id", referencedColumnName="id", onDelete="CASCADE")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")}
      * )
      **/
     protected $users;
@@ -225,5 +223,15 @@ class Project
     public function getIssues()
     {
         return $this->issues;
+    }
+
+    /**
+     * Get string value of name
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->name;
     }
 }
