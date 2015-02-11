@@ -3,3 +3,8 @@ services:
       class: Oro\IssueBundle\EventListener\IssueListener
       tags:
           - { name: doctrine.event_listener, event: postPersist }
+
+  comment.listener:
+      class: Oro\IssueBundle\EventListener\CommentListener
+      tags:
+          - { name: doctrine.event_listener, event: postPersist }

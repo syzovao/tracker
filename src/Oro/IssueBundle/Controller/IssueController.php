@@ -144,16 +144,12 @@ class IssueController extends Controller
             throw $this->createNotFoundException('Unable to find Issue entity.');
         }
 
-        $user = $this->getUser();
-        $entity->setAssignee($user);
-
         $deleteForm = $this->createDeleteForm($entity);
         $editForm = $this->createEditForm($entity);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
             $entity->setUpdatedAt();
-            $entity->addCollaborator($user);
             $entity->addCollaborator($entity->getAssignee());
             $em = $this->getDoctrine()->getManager();
             $em->flush();
