@@ -32,8 +32,10 @@ class IssueController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $entities = $em->getRepository('OroIssueBundle:Issue')->findAll();
+        $userEntities = $em->getRepository('OroIssueBundle:Issue')->findByUser($this->getUser()->getId());
         return array(
             'entities' => $entities,
+            'user_entities' => $userEntities,
         );
     }
 
@@ -87,7 +89,7 @@ class IssueController extends Controller
     /**
      * Finds and displays a Issue entity.
      *
-     * @Route("/{id}", name="oro_issue_view", requirements={"id"="\d+"})
+     * @Route("/view/{id}", name="oro_issue_view", requirements={"id"="\d+"})
      * @ParamConverter("entity", class="OroIssueBundle:Issue")
      * @Template()
      *

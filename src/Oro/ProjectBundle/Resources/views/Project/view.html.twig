@@ -1,14 +1,14 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1 class="page-header">Project</h1>
+    <h1 class="page-header">Project: {{ entity.name }}</h1>
     <ul class="nav nav-pills">
         <li role="presentation"><a href="{{ path('oro_project_create')}}"> Create</a></li>
         <li role="presentation"><a href="{{ path('oro_project_update', { 'id': entity.id }) }}">Edit</a></li>
         <li>{{ form(delete_form) }}</li>
     </ul>
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-12">
             <table class="table table-bordered">
                 <tbody>
                 <tr>
@@ -41,6 +41,15 @@
             </table>
         </div>
     </div>
+
+    <a href="{{ path('oro_issue_create') }}" class="btn btn-default" role="button">Create Issue</a>
+    <div class="list-group">
+        <a href="#" class="list-group-item active">Issues</a>
+        {% for issue in entity.issues %}
+            <a class="list-group-item" href="{{ path('oro_issue_view', { 'id': issue.id }) }}">{{ issue.code}}: {{ issue.summary}}</a>
+        {% endfor %}
+    </div>
+
     <ul class="record_actions list-inline">
         <li><a href="{{ path('oro_project') }}">Back to the list</a></li>
     </ul>

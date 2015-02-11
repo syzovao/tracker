@@ -1,46 +1,105 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Issues list</h1>
+    <h1>Issues</h1>
     <div class="row">
-        <div class="col-md-9">
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Code</th>
-                    <th>Summary</th>
-                    <th>Description</th>
-                    <th>Reporter</th>
-                    <th>Createdat</th>
-                    <th>Updatedat</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for entity in entities %}
+        <div class="col-md-12">
+
+            {% if is_granted('ROLE_ADMIN') %}
+            <div class="panel panel-default">
+                <div class="panel-heading">All issues</div>
+                <table class="table table-striped">
+                    <thead>
                     <tr>
-                        <td><a href="{{ path('oro_issue_view', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                        <td>{{ entity.code }}</td>
-                        <td>{{ entity.summary }}</td>
-                        <td>{{ entity.description }}</td>
-                        <td>{{ entity.reporter }}</td>
-                        <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                        <td>{% if entity.updatedAt %}{{ entity.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                        <td>
-                            <ul>
-                                <li>
-                                    <a href="{{ path('oro_issue_view', { 'id': entity.id }) }}">show</a>
-                                </li>
-                                <li>
-                                    <a href="{{ path('oro_issue_update', { 'id': entity.id }) }}">edit</a>
-                                </li>
-                            </ul>
-                        </td>
+                        <th>Id</th>
+                        <th>Project</th>
+                        <th>Code</th>
+                        <th>Summary</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Priority</th>
+                        <th>Reporter</th>
+                        <th>Created at</th>
+                        <th>Updated at</th>
+                        <th>Actions</th>
                     </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                    {% for entity in entities %}
+                        <tr>
+                            <td><a href="{{ path('oro_issue_view', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                            <td>{{ entity.project }}</td>
+                            <td>{{ entity.code }}</td>
+                            <td>{{ entity.summary }}</td>
+                            <td>{{ entity.description }}</td>
+                            <td>{{ entity.issueStatus }}</td>
+                            <td>{{ entity.issuePriority }}</td>
+                            <td>{{ entity.reporter }}</td>
+                            <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                            <td>{% if entity.updatedAt %}{{ entity.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                            <td>
+                                <ul>
+                                    <li>
+                                        <a href="{{ path('oro_issue_view', { 'id': entity.id }) }}">show</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('oro_issue_update', { 'id': entity.id }) }}">edit</a>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+
+            <div class="panel panel-default">
+                <div class="panel-heading">My issues</div>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Project</th>
+                        <th>Code</th>
+                        <th>Summary</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Priority</th>
+                        <th>Reporter</th>
+                        <th>Created at</th>
+                        <th>Updated at</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for entity in user_entities %}
+                        <tr>
+                            <td><a href="{{ path('oro_issue_view', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                            <td>{{ entity.project }}</td>
+                            <td>{{ entity.code }}</td>
+                            <td>{{ entity.summary }}</td>
+                            <td>{{ entity.description }}</td>
+                            <td>{{ entity.issueStatus }}</td>
+                            <td>{{ entity.issuePriority }}</td>
+                            <td>{{ entity.reporter }}</td>
+                            <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                            <td>{% if entity.updatedAt %}{{ entity.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                            <td>
+                                <ul>
+                                    <li>
+                                        <a href="{{ path('oro_issue_view', { 'id': entity.id }) }}">show</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('oro_issue_update', { 'id': entity.id }) }}">edit</a>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
             <a href="{{ path('oro_issue_create') }}" class="btn btn-info btn-s" role="button">
                 Create a new entry
             </a>

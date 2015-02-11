@@ -87,7 +87,7 @@ class Builder extends ContainerAware
         ))
             ->setAttribute('class', 'dropdown')
             ->setChildrenAttributes(array('class' => 'dropdown-menu', 'role' => 'menu'));
-        $menu['Issues']->addChild('My Issues', array('route' => 'oro_issue'));
+        $menu['Issues']->addChild('Issues List', array('route' => 'oro_issue'));
         $menu['Issues']->addChild('Create Issue', array('route' => 'oro_issue_create'));
 
         $menu->addChild('Log out', array('route' => 'logout'));

@@ -136,7 +136,7 @@ class IssueComment
      * @param \Oro\UserBundle\Entity\User $user
      * @return IssueComment
      */
-    public function setUser(User $user = null)
+    public function setUser(User $user)
     {
         $this->user = $user;
 

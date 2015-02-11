@@ -11,7 +11,7 @@ use Oro\UserBundle\Entity\User;
  * Issue
  *
  * @ORM\Table(name="oro_issue")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Oro\IssueBundle\Entity\IssueRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class Issue

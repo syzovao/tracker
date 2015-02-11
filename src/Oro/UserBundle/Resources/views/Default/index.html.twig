@@ -2,5 +2,11 @@
 {% block title %}OroUserBundle:Homepage:update{% endblock %}
 
 {% block body %}
-    <h1>Welcome to the User Main Page</h1>
+    <h1 class="page-header">User: {{ app.user.username }}</h1>
+    <div class="list-group">
+        <a href="#" class="list-group-item active">My Issues</a>
+        {% for issue in issues %}
+            <a class="list-group-item" href="{{ path('oro_issue_view', { 'id': issue.id }) }}">{{ issue.code}}: {{ issue.summary}} ({{ issue.project }})</a>
+        {% endfor %}
+    </div>
 {% endblock %}

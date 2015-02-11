@@ -42,12 +42,18 @@ class UserController extends Controller
     {
         $repository = $this->getDoctrine()->getRepository('OroUserBundle:User');
         $user = $repository->findOneById($id);
+
+        $em = $this->getDoctrine()->getManager();
+        $issues = $em->getRepository('OroIssueBundle:Issue')->findByUser($user->getId());
         if (!$user) {
             throw $this->createNotFoundException(
                 'No account found for id '.$id
             );
         }
-        return array('user' => $user);
+        return array(
+            'user' => $user,
+            'issues' => $issues,
+        );
     }
 
     /**

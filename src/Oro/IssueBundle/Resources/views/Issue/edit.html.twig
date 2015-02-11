@@ -2,6 +2,10 @@
 
 {% block body -%}
     <h1 class="page-header">Issue edit</h1>
+    <ol class="breadcrumb">
+        <li><a href="{{ path('oro_project_view', { 'id': entity.project.id })}}">{{ entity.project }}</a></li>
+        <li><a href="{{ path('oro_issue_view', { 'id': entity.id }) }}">{{ entity.code }}</a></li>
+    </ol>
     <ul class="nav nav-pills">
         <li>{{ form(delete_form) }}</li>
     </ul>
