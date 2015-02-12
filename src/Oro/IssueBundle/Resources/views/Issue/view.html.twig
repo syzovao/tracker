@@ -60,8 +60,19 @@
                 </tbody>
             </table>
 
-            {% include 'OroIssueBundle:Comment:index.html.twig' with { 'comments': entity.comments } %}
-            {{ render(controller('OroIssueBundle:Comment:create', {'issueId' : entity.id})) }}
+            <ul id="myTab" class="nav nav-tabs">
+                <li class="active"><a href="#comments" data-toggle="tab">Comments</a></li>
+                <li><a href="#activity" data-toggle="tab">Activity</a></li>
+            </ul>
+            <div id="myTabContent" class="tab-content">
+                <div class="tab-pane active" id="comments">
+                    {% include 'OroIssueBundle:Comment:index.html.twig' with { 'comments': entity.comments } %}
+                    {{ render(controller('OroIssueBundle:Comment:create', {'issueId' : entity.id})) }}
+                </div>
+                <div class="tab-pane" id="activity">
+                    {{ render(controller('OroIssueBundle:Activity:index', {'issueId' : entity.id })) }}
+                </div>
+            </div>
 
         </div>
     </div>

@@ -1,0 +1,4 @@
+Issue {{ issue.code }} : {{ issue.summary }}
+Created by {{ user.username }} at {% if issue.createdAt %}{{ issue.createdAt|date('Y-m-d H:i:s') }}{% endif %}.
+
+{{ description }}

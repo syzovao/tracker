@@ -143,6 +143,14 @@ class Issue
     private $updatedAt;
 
     /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="Oro\UserBundle\Entity\User")
+     * @ORM\JoinColumn(name="updatedBy", referencedColumnName="id", onDelete="SET NULL")
+     */
+    private $updatedBy;
+
+    /**
      * @var ArrayCollection Comment[]
      *
      * @ORM\OneToMany(targetEntity="Oro\IssueBundle\Entity\IssueComment", mappedBy="issue")
@@ -600,5 +608,28 @@ class Issue
     public function getComments()
     {
         return $this->comments;
+    }
+
+    /**
+     * Set updatedBy
+     *
+     * @param \Oro\UserBundle\Entity\User $updatedBy
+     * @return Issue
+     */
+    public function setUpdatedBy(User $updatedBy = null)
+    {
+        $this->updatedBy = $updatedBy;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedBy
+     *
+     * @return \Oro\UserBundle\Entity\User 
+     */
+    public function getUpdatedBy()
+    {
+        return $this->updatedBy;
     }
 }

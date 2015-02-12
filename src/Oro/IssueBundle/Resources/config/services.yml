@@ -1,10 +1,21 @@
-services:
-  issue.listener:
-      class: Oro\IssueBundle\EventListener\IssueListener
-      tags:
-          - { name: doctrine.event_listener, event: postPersist }
+parameters:
+    oro.sender_email: tracker@example.com
+    oro.sender_name: Tracker Service Team
 
-  comment.listener:
-      class: Oro\IssueBundle\EventListener\CommentListener
-      tags:
-          - { name: doctrine.event_listener, event: postPersist }
+services:
+    issue.listener:
+        class: Oro\IssueBundle\EventListener\IssueListener
+        arguments: ["@security.token_storage"]
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+
+    comment.listener:
+        class: Oro\IssueBundle\EventListener\CommentListener
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }
+
+    activity.listener:
+        class: Oro\IssueBundle\EventListener\ActivityListener
+        arguments: ["@service_container"]
+        tags:
+            - { name: doctrine.event_listener, event: postPersist }

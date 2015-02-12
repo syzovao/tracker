@@ -4,6 +4,7 @@ namespace Oro\IssueBundle\EventListener;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Oro\IssueBundle\Entity\Issue;
 use Oro\IssueBundle\Entity\IssueComment;
+use Oro\IssueBundle\Entity\IssueActivity;
 
 
 class CommentListener
@@ -15,15 +16,28 @@ class CommentListener
      */
     public function postPersist(LifecycleEventArgs $args)
     {
+        /** @var IssueComment $entity */
         $entity = $args->getEntity();
-        $issue = $entity->getIssue();
-        $em = $args->getEntityManager();
+        if ($entity instanceof IssueComment) {
+            /** @var Issue $issue */
+            $issue = $entity->getIssue();
+            /** @var \Doctrine\ORM\EntityManager $em */
+            $em = $args->getEntityManager();
 
-        if ($entity instanceof IssueComment && $issue instanceof Issue) {
             //add commentator as collaborator
             $issue->addCollaborator($entity->getUser());
-            $em->persist($entity);
+            $em->persist($issue);
             $em->flush();
+
+            //create activity
+            $activity = new IssueActivity();
+            $activity
+                ->setCode(IssueActivity::ACTIVITY_ISSUE_COMMENTED)
+                ->setIssue($issue)
+                ->setUser($entity->getUser())
+                ->setDescription('Comment: ' . $entity->getContent());
+            $em->persist($activity);
+            $em->flush($activity);
         }
     }
 }
