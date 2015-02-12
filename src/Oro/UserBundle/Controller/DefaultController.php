@@ -17,8 +17,10 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $issues = $em->getRepository('OroIssueBundle:Issue')->findByUserCollaborator($user->getId());
+        $activities = $em->getRepository('OroIssueBundle:IssueActivity')->findByProjectMember($user->getId());
         return array(
-            'issues' => $issues
+            'issues' => $issues,
+            'activities' => $activities
         );
     }
 }

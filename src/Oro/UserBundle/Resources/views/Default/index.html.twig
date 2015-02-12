@@ -9,4 +9,12 @@
             <a class="list-group-item" href="{{ path('oro_issue_view', { 'id': issue.id }) }}">{{ issue.code}}: {{ issue.summary}} ({{ issue.project }})</a>
         {% endfor %}
     </div>
+    <div class="list-group">
+        <a href="#" class="list-group-item active">My Activities</a>
+        {% for activity in activities %}
+            <a class="list-group-item" href="{{ path('oro_issue_view', { 'id': activity.issue.id }) }}">
+                ({{ activity.issue.project }}) Issue: {{ activity.issue}}
+                {{ activity.code}}</a>
+        {% endfor %}
+    </div>
 {% endblock %}

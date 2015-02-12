@@ -54,4 +54,37 @@ class IssueActivityRepository extends EntityRepository
 
         return $activities;
     }
+
+    /**
+     * Find activities By Project Member
+     *
+     * @param $userId
+     * @return array
+     * @throws EntityNotFoundException
+     */
+    public function findByProjectMember($userId)
+    {
+        $q = $this->createQueryBuilder('a')
+            ->select('a')
+            ->addOrderBy('a.createdAt', 'DESC')
+            ->join('a.issue', 'i')
+            ->join('i.project', 'p')
+            ->join('p.users', 'u')
+            ->where('u.id = :user_id')
+            ->setParameter('user_id', $userId);
+
+        try {
+            // The Query::getResult() method throws an exception
+            // if there is no record matching the criteria.
+            $activities = $q->getQuery()->getResult();
+        } catch (NoResultException $e) {
+            $message = sprintf(
+                'Unable to find an active admin IssueBundle:IssueActivity object identified by "%s".',
+                $userId
+            );
+            throw new EntityNotFoundException($message, 0, $e);
+        }
+
+        return $activities;
+    }
 }
