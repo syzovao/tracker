@@ -1,5 +1,5 @@
 Issue {{ issue.code }} : {{ issue.summary }}
-Changed by {{ user.username }} at {{ issue.updatedAt }}.
+Changed by {{ user.username }} at {% if issue.updatedAt %}{{ issue.updatedAt|date('Y-m-d H:i:s') }}{% endif %}.
 Status: {{ issue.issueStatus }}
 
 {{ description }}
