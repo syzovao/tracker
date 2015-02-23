@@ -4,6 +4,8 @@ namespace Oro\IssueBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\ExecutionContextInterface;
+
 use Oro\ProjectBundle\Entity\Project;
 use Oro\UserBundle\Entity\User;
 
@@ -341,7 +343,7 @@ class Issue
     /**
      * Set parent
      *
-     * @param integer $parent
+     * @param Issue $parent
      * @return Issue
      */
     public function setParent($parent)
@@ -354,7 +356,7 @@ class Issue
     /**
      * Get parent
      *
-     * @return integer 
+     * @return Issue
      */
     public function getParent()
     {
@@ -432,7 +434,7 @@ class Issue
     /**
      * Set issueType
      *
-     * @param issueType $issueType
+     * @param IssueType $issueType
      * @return Issue
      */
     public function setIssueType($issueType)
@@ -478,7 +480,7 @@ class Issue
     /**
      * Set IssueStatus
      *
-     * @param string $issueStatus
+     * @param IssueStatus $issueStatus
      * @return IssueStatus
      */
     public function setIssueStatus($issueStatus)
@@ -542,6 +544,16 @@ class Issue
     public function getProject()
     {
         return $this->project;
+    }
+
+    /**
+     * Get if issue has children
+     *
+     * @return bool
+     */
+    public function hasChildren()
+    {
+        return $this->children->count() == 0 ? false : true;
     }
 
     /**
@@ -631,5 +643,23 @@ class Issue
     public function getUpdatedBy()
     {
         return $this->updatedBy;
+    }
+
+    /**
+     * Validate not empty parent for sub-task
+     *
+     * @param ExecutionContextInterface $context
+     */
+    public function validateParentIssue(ExecutionContextInterface $context)
+    {
+        $type = $this->getIssueType();
+        if ($type->getCode() == IssueType::TYPE_SUBTASK) {
+            $parent = $this->getParent();
+            if (empty($parent)) {
+                $context->addViolationAt('parent', 'Please, set parent issue for sub-task.');
+            } elseif ($this->getProject()->getId() != $parent->getProject()->getId()) {
+                $context->addViolationAt('parent', 'Only issue assigned to selected project could be set as parent.');
+            }
+        }
     }
 }

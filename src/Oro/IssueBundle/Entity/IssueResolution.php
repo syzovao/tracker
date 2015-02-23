@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class IssueResolution
 {
-    const RESOLUTION_UNRESOLVED = 'unresolved';
+    const RESOLUTION_INCOMPLETE = 'incomplete';
     const RESOLUTION_DUPLICATE = 'duplicate';
     const RESOLUTION_WONTFIX = 'wontfix';
     const RESOLUTION_FIXED = 'fixed';

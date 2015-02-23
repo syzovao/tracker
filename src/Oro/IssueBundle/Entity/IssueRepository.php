@@ -4,6 +4,7 @@ namespace Oro\IssueBundle\Entity;
 use Doctrine\ORM\EntityNotFoundException;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
+use Oro\IssueBundle\Entity\IssueStatus;
 
 class IssueRepository extends EntityRepository
 {
@@ -48,7 +49,9 @@ class IssueRepository extends EntityRepository
     {
         $q = $this
             ->createQueryBuilder('u')
+            ->join('u.issueStatus', 's')
             ->where('u.assignee = :assignee OR u.reporter = :reporter')
+            ->andWhere("s.code IN ('open', 'reopened')")
             ->setParameter('assignee', $userId)
             ->setParameter('reporter', $userId)
             ->getQuery();

@@ -48,7 +48,6 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface
         $userAdmin->setPassword($encoder->encodePassword('adminpass', $userAdmin->getSalt()));
         $manager->persist($userAdmin);
 
-
         $roleManager = new Role();
         $roleManager
             ->setRole('ROLE_MANAGER')
@@ -85,7 +84,24 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface
         $user->setPassword($encoder->encodePassword('userpass', $user->getSalt()));
         $manager->persist($user);
 
+        $user2 = new User();
+        $user2
+            ->setEmail('user2@tracker.com')
+            ->setUsername('user2')
+            ->setFullname('Plusha2')
+            ->setRole($roleUser->getRole());
+        $encoder2 = $this->container
+            ->get('security.encoder_factory')
+            ->getEncoder($user2);
+        $user2->setPassword($encoder2->encodePassword('userpass2', $user2->getSalt()));
+        $manager->persist($user2);
+
         $manager->flush();
+
+        $this->addReference('user-admin', $userAdmin);
+        $this->addReference('user-manager', $userManager);
+        $this->addReference('user-operator1', $user);
+        $this->addReference('user-operator2', $user2);
     }
 
     /**

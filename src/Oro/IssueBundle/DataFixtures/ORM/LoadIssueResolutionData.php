@@ -13,10 +13,10 @@ class LoadIssueResolutionData extends AbstractFixture implements FixtureInterfac
      * @var array
      */
     protected $data = array(
-        IssueResolution::RESOLUTION_UNRESOLVED => 'Unresolved',
+        IssueResolution::RESOLUTION_INCOMPLETE => 'Incomplete',
         IssueResolution::RESOLUTION_DUPLICATE => 'Duplicate',
-        IssueResolution::RESOLUTION_WONTFIX => 'Resolved',
-        IssueResolution::RESOLUTION_FIXED => 'Won\'t fix',
+        IssueResolution::RESOLUTION_WONTFIX => 'Won\'t fix',
+        IssueResolution::RESOLUTION_FIXED => 'Fixed',
         IssueResolution::RESOLUTION_DONE => 'Done'
     );
 

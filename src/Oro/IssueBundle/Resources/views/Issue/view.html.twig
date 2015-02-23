@@ -4,6 +4,9 @@
     <h1 class="page-header">Issue</h1>
     <ol class="breadcrumb">
         <li><a href="{{ path('oro_project_view', { 'id': entity.project.id })}}">{{ entity.project }}</a></li>
+        {% if entity.parent %}
+            <li>Parent story <a href="{{ path('oro_issue_view', { 'id': entity.parent.id })}}"> {{ entity.parent.code }}</a></li>
+        {% endif %}
         <li>{{ entity.code }}</li>
     </ol>
     <ul class="nav nav-pills">
@@ -26,6 +29,14 @@
                 <tr>
                     <th>Summary</th>
                     <td>{{ entity.summary }}</td>
+                </tr>
+                <tr>
+                    <th>Status</th>
+                    <td>{{ entity.issueStatus }}</td>
+                </tr>
+                <tr>
+                    <th>Resolution</th>
+                    <td>{{ entity.issueResolution }}</td>
                 </tr>
                 <tr>
                     <th>Description</th>
@@ -59,6 +70,15 @@
                 </tr>
                 </tbody>
             </table>
+
+            {% if entity.hasChildren %}
+                <div class="list-group">
+                    <a href="#" class="list-group-item disabled">Sub-tasks</a>
+                    {% for subtask in entity.children %}
+                        <a class="list-group-item" href="{{ path('oro_issue_view', { 'id': subtask.id }) }}">{{ subtask.code}}</a>
+                    {% endfor %}
+                </div>
+            {% endif %}
 
             <ul id="myTab" class="nav nav-tabs">
                 <li class="active"><a href="#comments" data-toggle="tab">Comments</a></li>

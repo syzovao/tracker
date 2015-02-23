@@ -28,6 +28,7 @@ class ProjectController extends Controller
      */
     public function indexAction()
     {
+        /** @var \Doctrine\ORM\EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $entities = $em->getRepository('OroProjectBundle:Project')->findAll();
         return array(

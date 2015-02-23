@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Oro\IssueBundle\Entity\Issue;
+use Oro\IssueBundle\Entity\IssueType as IssueTypeEntity;
 use Oro\IssueBundle\Form\IssueType;
 
 /**
@@ -30,6 +31,7 @@ class IssueController extends Controller
      */
     public function indexAction()
     {
+        /** @var \Doctrine\ORM\EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         $entities = $em->getRepository('OroIssueBundle:Issue')->findAll();
         $userEntities = $em->getRepository('OroIssueBundle:Issue')->findByUser($this->getUser()->getId());
@@ -58,6 +60,10 @@ class IssueController extends Controller
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
         if ($form->isValid()) {
+            $issueType = $entity->getIssueType()->getCode();
+            if ($issueType != IssueTypeEntity::TYPE_SUBTASK) {
+                $entity->setParent(null);
+            }
             $entity->addCollaborator($user);
             $entity->addCollaborator($entity->getAssignee());
             $entity->setReporter($user);
@@ -149,6 +155,10 @@ class IssueController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
+            $issueType = $entity->getIssueType()->getCode();
+            if ($issueType != IssueTypeEntity::TYPE_SUBTASK) {
+                $entity->setParent(null);
+            }
             $entity->setUpdatedAt();
             $entity->addCollaborator($entity->getAssignee());
             $em = $this->getDoctrine()->getManager();

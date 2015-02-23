@@ -2,6 +2,9 @@ Oro\IssueBundle\Entity\Issue:
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
             { fields: code, message: 'This code is already in use.' }
+        - Callback:
+            methods: [validateParentIssue]
+
     properties:
         code:
             - NotBlank: ~

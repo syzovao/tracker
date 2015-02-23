@@ -15,10 +15,12 @@
                         <th>Project</th>
                         <th>Code</th>
                         <th>Summary</th>
-                        <th>Description</th>
+                        <th>Type</th>
                         <th>Status</th>
                         <th>Priority</th>
+                        <th>Resolution</th>
                         <th>Reporter</th>
+                        <th>Assignee</th>
                         <th>Created at</th>
                         <th>Updated at</th>
                         <th>Actions</th>
@@ -31,10 +33,12 @@
                             <td>{{ entity.project }}</td>
                             <td>{{ entity.code }}</td>
                             <td>{{ entity.summary }}</td>
-                            <td>{{ entity.description }}</td>
+                            <td>{{ entity.issueType }}</td>
                             <td>{{ entity.issueStatus }}</td>
                             <td>{{ entity.issuePriority }}</td>
+                            <td>{{ entity.issueResolution }}</td>
                             <td>{{ entity.reporter }}</td>
+                            <td>{{ entity.assignee }}</td>
                             <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                             <td>{% if entity.updatedAt %}{{ entity.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                             <td>
@@ -63,10 +67,11 @@
                         <th>Project</th>
                         <th>Code</th>
                         <th>Summary</th>
-                        <th>Description</th>
                         <th>Status</th>
                         <th>Priority</th>
+                        <th>Resolution</th>
                         <th>Reporter</th>
+                        <th>Assignee</th>
                         <th>Created at</th>
                         <th>Updated at</th>
                         <th>Actions</th>
@@ -79,10 +84,11 @@
                             <td>{{ entity.project }}</td>
                             <td>{{ entity.code }}</td>
                             <td>{{ entity.summary }}</td>
-                            <td>{{ entity.description }}</td>
                             <td>{{ entity.issueStatus }}</td>
                             <td>{{ entity.issuePriority }}</td>
+                            <td>{{ entity.issueResolution }}</td>
                             <td>{{ entity.reporter }}</td>
+                            <td>{{ entity.assignee }}</td>
                             <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                             <td>{% if entity.updatedAt %}{{ entity.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                             <td>
