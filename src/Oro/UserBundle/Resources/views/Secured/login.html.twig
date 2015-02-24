@@ -1,9 +1,9 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}OroUserBundle:Security:login{% endblock %}
+{% block title %}{{ 'user.login_page_title'|trans }}OroUserBundle:Security:login{% endblock %}
 
 {% block body %}
-    <h1>Welcome to the Security:login page</h1>
+    <h1>{{ 'user.login_page_title'|trans }}</h1>
 
     {% block content %}
         {% if error %}
@@ -12,9 +12,9 @@
     {% endblock %}
 
     <form action="{{ path('login_check') }}" method="post" id="login_form">
-        <label for="username">Username:</label>
+        <label for="username">{{ 'user.fields.username'|trans }}:</label>
         <input type="text" id="username" name="_username" value="{{ last_username }}" />
-        <label for="password">Password:</label>
+        <label for="password">{{ 'user.fields.password'|trans }}:</label>
         <input type="password" id="password" name="_password" />
         {#
         If you want to control the URL the user

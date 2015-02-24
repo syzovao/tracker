@@ -46,9 +46,8 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
         $issues = $em->getRepository('OroIssueBundle:Issue')->findByUser($user->getId());
         if (!$user) {
-            throw $this->createNotFoundException(
-                'No account found for id '.$id
-            );
+            $message = $this->get('translator')->trans('No account found for id %id%', array('%id%' => $id));
+            throw $this->createNotFoundException($message);
         }
         return array(
             'user' => $user,
@@ -113,7 +112,7 @@ class UserController extends Controller
         $user = $em->getRepository('OroUserBundle:User')->find($id);
 
         if (!$user) {
-            throw $this->createNotFoundException('Unable to find User entity.');
+            throw $this->createNotFoundException($this->get('translator')->trans('user.messages.entity_not_found'));
         }
 
         $form = $this->createForm(new UserType($em), $user);

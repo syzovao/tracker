@@ -80,8 +80,9 @@ class CommentController extends Controller
      */
     private function createCreateForm(IssueComment $entity)
     {
+        $url = $this->generateUrl('oro_comment_create', array('issueId' => $entity->getIssue()->getId()));
         $form = $this->createForm(new IssueCommentType(), $entity, array(
-            'action' => $this->generateUrl('oro_comment_create', array('issueId' => $entity->getIssue()->getId())),
+            'action' => $url,
             'method' => 'POST',
         ));
         $form->add('submit', 'submit', array('label' => 'Create'));
@@ -124,7 +125,9 @@ class CommentController extends Controller
 //        }
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Comment entity.');
+            throw $this->createNotFoundException(
+                $this->get('translator')->trans('issue.messages.entity_comment_not_found')
+            );
         }
 
         $deleteForm = $this->createDeleteForm($entity);

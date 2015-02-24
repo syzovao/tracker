@@ -1,0 +1,40 @@
+issue.label_issues: Issues
+issue.issue_title: 'Issue'
+issue.all_title: All issues
+issue.create_title: 'Create issue'
+issue.edit_title: 'Edit issue'
+
+issue.label_parent: Parent story
+issue.label_my_issues: My issues
+issue.label_subtasks: Sub-tasks
+
+issue:
+    fields:
+        id: Id
+        project: Project
+        code: Code
+        summary: Summary
+        type: Type
+        status: Status
+        priority: Priority
+        resolution: Resolution
+        description: Description
+        reporter: Reporter
+        assignee: Assignee
+        created_at: Created at
+        updated_at: Updated at
+        actions: Actions
+        collaborators: Collaborators
+issue.messages.entity_not_found: 'Unable to find issue entity.'
+issue.messages.entity_comment_not_found: 'Unable to find comment entity.'
+issue.messages.code_in_use: 'This code is already in use.'
+
+issue.activity.label_activity: Activity
+issue.activity.fields.changed_by: Changed by
+issue.activity.fields.created_by: Created by
+issue.activity.fields.commented_by: Commented by
+issue.comment.label_comment: Comment
+issue.comment.label_comments: Comments
+issue.comment.posted_by: Posted by
+issue.comment.comment_new_title: Add Comment
+

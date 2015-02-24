@@ -1,0 +1,29 @@
+menu:
+    home: Home
+    users: Users
+    users_list: Users list
+    users_create: Create User
+    projects: Projects
+    projects_list: Projects list
+    projects_create: Create Project
+    issues: Issues
+    issues_list: Issues List
+    issues_create: Create Issue
+    logout: Log out
+
+buttons:
+    view: View
+    edit: Edit
+    create: Create
+    show: Show
+    delete: Delete
+
+navigation:
+    back_to_list: 'Back To List'
+    back_to_issue: 'Back to Issue'
+    create_new_user: 'Create New User'
+    create_new_project: 'Create New Project'
+    create_new_issue: 'Create New Issue'
+
+main:
+    title: Oro Tracking

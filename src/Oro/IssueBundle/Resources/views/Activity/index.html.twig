@@ -1,10 +1,10 @@
 <ul class="list-group">
     {% for activity in entities %}
         <li class="list-group-item">
-            <p> Activity: {{ activity.code }}</p>
+            <p> {{ 'issue.activity.label_activity'|trans }}: {{ activity.code }}</p>
             <p> {{ activity.description }} </p>
             <p> <a href="{{ path('oro_issue_view', { 'id': activity.issue.id }) }}">{{ activity.issue}}</a> : {{ activity.issue.summary}}</p>
-            <p> Changed by: <a href="{{ path('oro_user_view', { 'id': activity.user.id }) }}">{{ activity.user}}</a>
+            <p> {{ 'issue.activity.fields.changed_by'|trans }}: <a href="{{ path('oro_user_view', { 'id': activity.user.id }) }}">{{ activity.user}}</a>
              {% if activity.createdAt %}{{ activity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</p>
         </li>
     {% endfor %}

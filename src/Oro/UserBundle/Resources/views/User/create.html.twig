@@ -1,11 +1,11 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}OroUserBundle:User:create{% endblock %}
+{% block title %}{{ 'user.create_page_title'|trans }}{% endblock %}
 
 {% block body %}
-    <h1 class="page-header">Welcome to the User:create page</h1>
+    <h1 class="page-header">{{ 'user.create_page_title'|trans }}</h1>
     <ul class="nav nav-pills">
-        <li><a href="{{ path('oro_user_index') }}">Users list</a></li>
+        <li><a href="{{ path('oro_user_index') }}">{{ 'user.label_users_list'|trans }}</a></li>
     </ul>
     {{ form_start(form) }}
     {{ form_errors(form) }}

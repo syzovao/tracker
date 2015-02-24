@@ -1,18 +1,18 @@
 {% extends '::base.html.twig' %}
-{% block title %}OroUserBundle:User:view{% endblock %}
+{% block title %}{{ 'user.view.page_title'|trans }}{% endblock %}
 {% block body %}
-    <h1 class="page-header">Welcome to the User:view page</h1>
+    <h1 class="page-header">{{ 'user.view.page_header'|trans }}</h1>
     <ul class="nav nav-pills">
-        <li><a href="{{ path('oro_user_update', {'id': user.id}) }}">Edit</a></li>
+        <li><a href="{{ path('oro_user_update', {'id': user.id}) }}">{{ 'user.label_edit'|trans }}</a></li>
     </ul>
     <div class="panel panel-default">
         <!-- Default panel contents -->
         <div class="panel-heading">{{ user.fullname }}</div>
         <div class="panel-body">
-            <p>Email: {{ user.email }}</p>
-            <p>Username: {{ user.username }}</p>
-            <p>Role: {{ user.role }}</p>
-            <p>Avatar: {{ user.avatarPath }} </p>
+            <p>{{ 'user.fields.email'|trans }}: {{ user.email }}</p>
+            <p>{{ 'user.fields.username'|trans }}: {{ user.username }}</p>
+            <p>{{ 'user.fields.role'|trans }}: {{ user.role }}</p>
+            <p>{{ 'user.fields.avatar'|trans }}: {{ user.avatarPath }} </p>
             <div class="illustration">
                 <img height="150" width="150" src="{{ asset(user.getAvatarImagePath(150)) }}" />
             </div>
@@ -20,19 +20,19 @@
     </div>
 
     <div class="list-group">
-        <a href="#" class="list-group-item active">Projects</a>
+        <a href="#" class="list-group-item active">{{ 'project.label_projects'|trans }}</a>
         {% for project in user.projects %}
             <a class="list-group-item" href="{{ path('oro_project_view', { 'id': project.id }) }}">{{ project.code}}: {{ project.name}}</a>
         {% endfor %}
     </div>
     <div class="list-group">
-        <a href="#" class="list-group-item active">Issues</a>
+        <a href="#" class="list-group-item active">{{ 'issue.label_issues'|trans }}</a>
         {% for issue in issues %}
             <a class="list-group-item" href="{{ path('oro_issue_view', { 'id': issue.id }) }}">{{ issue.code}}: {{ issue.summary}}</a>
         {% endfor %}
     </div>
 
     <ul class="record_actions list-inline">
-        <li><a href="{{ path('oro_user_index') }}">Back to the list</a></li>
+        <li><a href="{{ path('oro_user_index') }}">{{ 'navigation.back_to_list'|trans }}</a></li>
     </ul>
 {% endblock %}

@@ -1,18 +1,18 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1 class="page-header">Project list</h1>
+    <h1 class="page-header">{{ 'project.project_list_header'|trans }}</h1>
 
     <div class="row">
         <div class="col-md-9">
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>Code</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Actions</th>
+                    <th>{{ 'project.fields.id'|trans }}</th>
+                    <th>{{ 'project.fields.code'|trans }}</th>
+                    <th>{{ 'project.fields.name'|trans }}</th>
+                    <th>{{ 'project.fields.description'|trans }}</th>
+                    <th>{{ 'project.fields.actions'|trans }}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -23,8 +23,8 @@
                         <td>{{ entity.name }}</td>
                         <td>{{ entity.description }}</td>
                         <td>
-                            <a href="{{ path('oro_project_view', { 'id': entity.id }) }}" class="btn btn-info btn-xs" role="button" >View</a>
-                            <a href="{{ path('oro_project_update', { 'id': entity.id }) }}" class="btn btn-info btn-xs" role="button" >Edit</a>
+                            <a href="{{ path('oro_project_view', { 'id': entity.id }) }}" class="btn btn-info btn-xs" role="button" >{{ 'buttons.view'|trans }}</a>
+                            <a href="{{ path('oro_project_update', { 'id': entity.id }) }}" class="btn btn-info btn-xs" role="button" >{{ 'buttons.edit'|trans }}</a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -32,7 +32,7 @@
             </table>
 
             <a href="{{ path('oro_project_create') }}" class="btn btn-info btn-s" role="button">
-                Create a new entry
+                {{ 'buttons.create'|trans }}
             </a>
         </div>
     </div>

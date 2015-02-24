@@ -653,12 +653,18 @@ class Issue
     public function validateParentIssue(ExecutionContextInterface $context)
     {
         $type = $this->getIssueType();
+        $parent = $this->getParent();
         if ($type->getCode() == IssueType::TYPE_SUBTASK) {
-            $parent = $this->getParent();
             if (empty($parent)) {
-                $context->addViolationAt('parent', 'Please, set parent issue for sub-task.');
+                $context->addViolationAt('parent', 'issue.validators.parent_empty');
             } elseif ($this->getProject()->getId() != $parent->getProject()->getId()) {
-                $context->addViolationAt('parent', 'Only issue assigned to selected project could be set as parent.');
+                $context->addViolationAt('parent', 'issue.validators.parent_wrong_project');
+            } elseif ($this->getId() == $parent->getId()) {
+                $context->addViolationAt('parent', 'issue.validators.parent_the_same');
+            }
+        } else {
+            if (!empty($parent)) {
+                $context->addViolationAt('parent', 'issue.validators.parent_only_for_subtask');
             }
         }
     }

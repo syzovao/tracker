@@ -1,0 +1,23 @@
+'No account found for id %id%': 'No account found for id %id%'
+user.login_page_title: 'Login page'
+user.view_page_title: 'Welcome to the User:view page'
+user.view.page_title: 'OroUserBundle:User:view'
+user.view.page_header: 'User view'
+user.update_page_title: 'Welcome to the User:update page'
+user.index_page_title: 'OroUserBundle:User:index'
+user.label_users_list: Users list
+user.label_edit: Edit
+user.label_email: Email
+user.label_username: Username
+user.label_role: Role
+user.label_avatar: Avatar
+user.fields.id: Id
+user.fields.fullname: 'Full Name'
+user.fields.email: Email
+user.fields.username: Username
+user.fields.password: Password
+user.fields.role: Role
+user.fields.avatar: Avatar
+user.fields.actions: Actions
+user.create_page_title: OroUserBundle:User:create
+user.messages.entity_not_found: Unable to find User entity.

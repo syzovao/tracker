@@ -1,12 +1,12 @@
 Oro\UserBundle\Entity\User:
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
-            { fields: email, message: 'This email is already in use.' }
+            { fields: email, message: "user.validators.email_in_use" }
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
-            { fields: username, message: 'This username is already in use.' }
+            { fields: username, message: "user.validators.username_in_use" }
     properties:
         email:
-            - NotBlank: { message: "user.email.not_blank" }
+            - NotBlank: { message: "user.validators.email_not_blank" }
         password:
             - NotBlank: ~
         username:

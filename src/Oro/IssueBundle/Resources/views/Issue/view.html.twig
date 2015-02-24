@@ -1,17 +1,17 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1 class="page-header">Issue</h1>
+    <h1 class="page-header">{{ 'issue.issue_title'|trans }}</h1>
     <ol class="breadcrumb">
         <li><a href="{{ path('oro_project_view', { 'id': entity.project.id })}}">{{ entity.project }}</a></li>
         {% if entity.parent %}
-            <li>Parent story <a href="{{ path('oro_issue_view', { 'id': entity.parent.id })}}"> {{ entity.parent.code }}</a></li>
+            <li>{{ 'issue.label_parent'|trans }} <a href="{{ path('oro_issue_view', { 'id': entity.parent.id })}}"> {{ entity.parent.code }}</a></li>
         {% endif %}
         <li>{{ entity.code }}</li>
     </ol>
     <ul class="nav nav-pills">
-        <li role="presentation"><a href="{{ path('oro_issue_create')}}"> Create new</a></li>
-        <li role="presentation"><a href="{{ path('oro_issue_update', { 'id': entity.id }) }}">Edit</a></li>
+        <li role="presentation"><a href="{{ path('oro_issue_create')}}">{{ 'buttons.create'|trans }}</a></li>
+        <li role="presentation"><a href="{{ path('oro_issue_update', { 'id': entity.id }) }}">{{ 'buttons.edit'|trans }}</a></li>
         <li>{{ form(delete_form) }}</li>
     </ul>
     <div class="row">
@@ -19,39 +19,39 @@
             <table class="table table-bordered">
                 <tbody>
                 <tr>
-                    <th>Id</th>
+                    <th>{{ 'issue.fields.id'|trans }}</th>
                     <td>{{ entity.id }}</td>
                 </tr>
                 <tr>
-                    <th>Code</th>
+                    <th>{{ 'issue.fields.code'|trans }}</th>
                     <td>{{ entity.code }}</td>
                 </tr>
                 <tr>
-                    <th>Summary</th>
+                    <th>{{ 'issue.fields.summary'|trans }}</th>
                     <td>{{ entity.summary }}</td>
                 </tr>
                 <tr>
-                    <th>Status</th>
+                    <th>{{ 'issue.fields.status'|trans }}</th>
                     <td>{{ entity.issueStatus }}</td>
                 </tr>
                 <tr>
-                    <th>Resolution</th>
+                    <th>{{ 'issue.fields.resolution'|trans }}</th>
                     <td>{{ entity.issueResolution }}</td>
                 </tr>
                 <tr>
-                    <th>Description</th>
+                    <th>{{ 'issue.fields.description'|trans }}</th>
                     <td>{{ entity.description }}</td>
                 </tr>
                 <tr>
-                    <th>Reporter</th>
+                    <th>{{ 'issue.fields.reporter'|trans }}</th>
                     <td>{{ entity.reporter }}</td>
                 </tr>
                 <tr>
-                    <th>Assignee</th>
+                    <th>{{ 'issue.fields.assignee'|trans }}</th>
                     <td>{{ entity.assignee }}</td>
                 </tr>
                 <tr>
-                    <th>Collaborators</th>
+                    <th>{{ 'issue.fields.collaborators'|trans }}</th>
                     <td>
                         <ul>
                             {% for user in entity.collaborators %}
@@ -61,11 +61,11 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>Created at</th>
+                    <th>{{ 'issue.fields.created_at'|trans }}</th>
                     <td>{{ entity.createdAt|date('Y-m-d H:i:s') }}</td>
                 </tr>
                 <tr>
-                    <th>Updated at</th>
+                    <th>{{ 'issue.fields.updated_at'|trans }}</th>
                     <td>{{ entity.updatedAt|date('Y-m-d H:i:s') }}</td>
                 </tr>
                 </tbody>
@@ -73,7 +73,7 @@
 
             {% if entity.hasChildren %}
                 <div class="list-group">
-                    <a href="#" class="list-group-item disabled">Sub-tasks</a>
+                    <a href="#" class="list-group-item disabled">{{ 'issue.label_subtasks'|trans }}</a>
                     {% for subtask in entity.children %}
                         <a class="list-group-item" href="{{ path('oro_issue_view', { 'id': subtask.id }) }}">{{ subtask.code}}</a>
                     {% endfor %}
@@ -81,8 +81,8 @@
             {% endif %}
 
             <ul id="myTab" class="nav nav-tabs">
-                <li class="active"><a href="#comments" data-toggle="tab">Comments</a></li>
-                <li><a href="#activity" data-toggle="tab">Activity</a></li>
+                <li class="active"><a href="#comments" data-toggle="tab">{{ 'issue.comment.label_comments'|trans }}</a></li>
+                <li><a href="#activity" data-toggle="tab">{{ 'issue.activity.label_activity'|trans }}</a></li>
             </ul>
             <div id="myTabContent" class="tab-content">
                 <div class="tab-pane active" id="comments">
@@ -97,6 +97,6 @@
         </div>
     </div>
     <ul class="record_actions list-inline">
-        <li><a href="{{ path('oro_issue') }}">Back to the list</a></li>
+        <li><a href="{{ path('oro_issue') }}">{{ 'navigation.back_to_list'|trans }}</a></li>
     </ul>
 {% endblock %}

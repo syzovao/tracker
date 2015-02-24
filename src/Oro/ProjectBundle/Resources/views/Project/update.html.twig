@@ -1,7 +1,7 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1 class="page-header">Project edit</h1>
+    <h1 class="page-header">{{ 'project.project_edit_header'|trans }}</h1>
     <ul class="nav nav-pills">
         <li>{{ form(delete_form) }}</li>
     </ul>
@@ -13,6 +13,6 @@
     {{ form_end(edit_form) }}
 
     <ul class="record_actions list-inline">
-        <li><a href="{{ path('oro_project') }}">Back to the list</a></li>
+        <li><a href="{{ path('oro_project') }}">{{ 'navigation.back_to_list'|trans }}</a></li>
     </ul>
 {% endblock %}

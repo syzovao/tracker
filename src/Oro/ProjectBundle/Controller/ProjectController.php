@@ -83,7 +83,7 @@ class ProjectController extends Controller
     public function viewAction(Project $entity)
     {
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Project entity.');
+            throw $this->createNotFoundException($this->get('translator')->trans('project.messages.entity_not_found'));
         }
         $deleteForm = $this->createDeleteForm($entity);
 
@@ -112,7 +112,7 @@ class ProjectController extends Controller
             throw new AccessDeniedException();
         }
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Project entity.');
+            throw $this->createNotFoundException($this->get('translator')->trans('project.messages.entity_not_found'));
         }
 
         $deleteForm = $this->createDeleteForm($entity);
@@ -153,7 +153,9 @@ class ProjectController extends Controller
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('OroProjectBundle:Project')->find($entity->getId());
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Project entity.');
+                throw $this->createNotFoundException(
+                    $this->get('translator')->trans('project.messages.entity_not_found')
+                );
             }
             $em->remove($entity);
             $em->flush();

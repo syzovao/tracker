@@ -1,29 +1,29 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>Issues</h1>
+    <h1>{{ 'issue.label_issues'|trans }}</h1>
     <div class="row">
         <div class="col-md-12">
 
             {% if is_granted('ROLE_ADMIN') %}
             <div class="panel panel-default">
-                <div class="panel-heading">All issues</div>
+                <div class="panel-heading">{{ 'issue.all_title'|trans }}</div>
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Project</th>
-                        <th>Code</th>
-                        <th>Summary</th>
-                        <th>Type</th>
-                        <th>Status</th>
-                        <th>Priority</th>
-                        <th>Resolution</th>
-                        <th>Reporter</th>
-                        <th>Assignee</th>
-                        <th>Created at</th>
-                        <th>Updated at</th>
-                        <th>Actions</th>
+                        <th>{{ 'issue.fields.id'|trans }}</th>
+                        <th>{{ 'issue.fields.project'|trans }}</th>
+                        <th>{{ 'issue.fields.code'|trans }}</th>
+                        <th>{{ 'issue.fields.summary'|trans }}</th>
+                        <th>{{ 'issue.fields.type'|trans }}</th>
+                        <th>{{ 'issue.fields.status'|trans }}</th>
+                        <th>{{ 'issue.fields.priority'|trans }}</th>
+                        <th>{{ 'issue.fields.resolution'|trans }}</th>
+                        <th>{{ 'issue.fields.reporter'|trans }}</th>
+                        <th>{{ 'issue.fields.assignee'|trans }}</th>
+                        <th>{{ 'issue.fields.created_at'|trans }}</th>
+                        <th>{{ 'issue.fields.updated_at'|trans }}</th>
+                        <th>{{ 'issue.fields.actions'|trans }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -44,10 +44,10 @@
                             <td>
                                 <ul>
                                     <li>
-                                        <a href="{{ path('oro_issue_view', { 'id': entity.id }) }}">show</a>
+                                        <a href="{{ path('oro_issue_view', { 'id': entity.id }) }}">{{ 'buttons.show'|trans }}</a>
                                     </li>
                                     <li>
-                                        <a href="{{ path('oro_issue_update', { 'id': entity.id }) }}">edit</a>
+                                        <a href="{{ path('oro_issue_update', { 'id': entity.id }) }}">{{ 'buttons.edit'|trans }}</a>
                                     </li>
                                 </ul>
                             </td>
@@ -59,22 +59,23 @@
             {% endif %}
 
             <div class="panel panel-default">
-                <div class="panel-heading">My issues</div>
+                <div class="panel-heading">{{ 'issue.label_my_issues'|trans }}</div>
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Project</th>
-                        <th>Code</th>
-                        <th>Summary</th>
-                        <th>Status</th>
-                        <th>Priority</th>
-                        <th>Resolution</th>
-                        <th>Reporter</th>
-                        <th>Assignee</th>
-                        <th>Created at</th>
-                        <th>Updated at</th>
-                        <th>Actions</th>
+                        <th>{{ 'issue.fields.id'|trans }}</th>
+                        <th>{{ 'issue.fields.project'|trans }}</th>
+                        <th>{{ 'issue.fields.code'|trans }}</th>
+                        <th>{{ 'issue.fields.summary'|trans }}</th>
+                        <th>{{ 'issue.fields.type'|trans }}</th>
+                        <th>{{ 'issue.fields.status'|trans }}</th>
+                        <th>{{ 'issue.fields.priority'|trans }}</th>
+                        <th>{{ 'issue.fields.resolution'|trans }}</th>
+                        <th>{{ 'issue.fields.reporter'|trans }}</th>
+                        <th>{{ 'issue.fields.assignee'|trans }}</th>
+                        <th>{{ 'issue.fields.created_at'|trans }}</th>
+                        <th>{{ 'issue.fields.updated_at'|trans }}</th>
+                        <th>{{ 'issue.fields.actions'|trans }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -84,6 +85,7 @@
                             <td>{{ entity.project }}</td>
                             <td>{{ entity.code }}</td>
                             <td>{{ entity.summary }}</td>
+                            <td>{{ entity.issueType }}</td>
                             <td>{{ entity.issueStatus }}</td>
                             <td>{{ entity.issuePriority }}</td>
                             <td>{{ entity.issueResolution }}</td>
@@ -94,10 +96,10 @@
                             <td>
                                 <ul>
                                     <li>
-                                        <a href="{{ path('oro_issue_view', { 'id': entity.id }) }}">show</a>
+                                        <a href="{{ path('oro_issue_view', { 'id': entity.id }) }}">{{ 'buttons.show'|trans }}</a>
                                     </li>
                                     <li>
-                                        <a href="{{ path('oro_issue_update', { 'id': entity.id }) }}">edit</a>
+                                        <a href="{{ path('oro_issue_update', { 'id': entity.id }) }}">{{ 'buttons.edit'|trans }}</a>
                                     </li>
                                 </ul>
                             </td>
@@ -107,7 +109,7 @@
                 </table>
             </div>
             <a href="{{ path('oro_issue_create') }}" class="btn btn-info btn-s" role="button">
-                Create a new entry
+                {{ 'buttons.create'|trans }}
             </a>
         </div>
     </div>

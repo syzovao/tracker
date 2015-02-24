@@ -1,7 +1,7 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1 class="page-header">Issue creation</h1>
+    <h1 class="page-header">{{ 'issue.create_title'|trans }}</h1>
 
     {{ form_start(form) }}
     {{ form_rest(form) }}
@@ -10,6 +10,6 @@
     {{ form_end(form) }}
 
     <ul class="record_actions list-inline">
-        <li><a href="{{ path('oro_issue') }}">Back to the list</a></li>
+        <li><a href="{{ path('oro_issue') }}">{{ 'navigation.back_to_list'|trans }}</a></li>
     </ul>
 {% endblock %}

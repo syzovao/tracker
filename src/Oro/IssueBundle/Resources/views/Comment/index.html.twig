@@ -2,13 +2,13 @@
     {% for comment in entity.comments %}
         <li class="list-group-item">
             <span class="glyphicon glyphicon-comment"></span>
-            Posted by
+            {{ 'issue.comment.posted_by'|trans }}
             <a href="{{ path('oro_user_view', { 'id': comment.user.id }) }}">{{ comment.user}}</a>
             at {% if comment.createdAt %}{{ comment.createdAt|date('Y-m-d H:i:s') }}{% endif %}
             <div class="pull-right">
-                <a href="{{ path('oro_comment_update', { 'id': comment.id }) }}">edit</a>
+                <a href="{{ path('oro_comment_update', { 'id': comment.id }) }}">{{ 'buttons.edit'|trans }}</a>
                 {% if is_granted('ROLE_ADMIN') %}
-                    | <a href="{{ path('oro_comment_delete', { 'id': comment.id }) }}">delete</a>
+                    | <a href="{{ path('oro_comment_delete', { 'id': comment.id }) }}">{{ 'buttons.delete'|trans }}</a>
                 {% endif %}
             </div>
             <p>{{ comment.content }}</p>

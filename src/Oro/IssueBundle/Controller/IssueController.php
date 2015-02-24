@@ -105,7 +105,7 @@ class IssueController extends Controller
     public function viewAction(Issue $entity)
     {
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Issue entity.');
+            throw $this->createNotFoundException($this->get('translator')->trans('issue.messages.entity_not_found'));
         }
         $deleteForm = $this->createDeleteForm($entity);
         return array(
@@ -147,7 +147,7 @@ class IssueController extends Controller
             throw new AccessDeniedException();
         }
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Issue entity.');
+            throw $this->createNotFoundException($this->get('translator')->trans('issue.messages.entity_not_found'));
         }
 
         $deleteForm = $this->createDeleteForm($entity);
@@ -194,7 +194,9 @@ class IssueController extends Controller
             $em = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('OroIssueBundle:Issue')->find($entity->getId());
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Issue entity.');
+                throw $this->createNotFoundException(
+                    $this->get('translator')->trans('issue.messages.entity_not_found')
+                );
             }
             $em->remove($entity);
             $em->flush();

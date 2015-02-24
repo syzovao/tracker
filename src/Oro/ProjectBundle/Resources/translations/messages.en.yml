@@ -1,0 +1,13 @@
+project.label_projects: Projects
+project.label_project: Project
+project.project_edit_header: 'Project edit'
+project.fields.id: Id
+project.fields.actions: Actions
+project.fields.code: Code
+project.fields.name: Name
+project.fields.description: Description
+project.fields.users: Users
+project.fields.issues: Issues
+project.project_create_header: 'Project create'
+project.project_list_header: 'Project list'
+project.messages.entity_not_found: 'Unable to find project entity.'

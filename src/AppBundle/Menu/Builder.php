@@ -24,9 +24,9 @@ class Builder extends ContainerAware
         $menu->setChildrenAttribute('class', 'nav nav-pills');
         $menu->setChildrenAttribute('role', 'tablist');
 
-        $menu->addChild('Home', array('route' => 'dashboard'));
+        $menu->addChild($this->container->get('translator')->trans('menu.home'), array('route' => 'dashboard'));
         $menu->addChild('Users', array(
-            'label' => 'Users',
+            'label' => $this->container->get('translator')->trans('menu.users'),
             'route' => 'oro_user_index',
             'extras' => array(
                 'routes' => array(
@@ -45,10 +45,17 @@ class Builder extends ContainerAware
             ->setAttribute('class', 'dropdown')
             ->setChildrenAttributes(array('class' => 'dropdown-menu', 'role' => 'menu'));
 
-        $menu['Users']->addChild('Users list', array('route' => 'oro_user_index'));
-        $menu['Users']->addChild('User create', array('route' => 'oro_user_create'));
+        $menu['Users']->addChild('Users list', array(
+            'label' => $this->container->get('translator')->trans('menu.users_list'),
+            'route' => 'oro_user_index'
+        ));
+        $menu['Users']->addChild('User create', array(
+            'label' => $this->container->get('translator')->trans('menu.users_create'),
+            'route' => 'oro_user_create'
+        ));
 
         $menu->addChild('Projects', array(
+            'label' => $this->container->get('translator')->trans('menu.projects'),
             'route' => 'oro_project',
             'extras' => array(
                 'routes' => array(
@@ -66,10 +73,17 @@ class Builder extends ContainerAware
         ))
             ->setAttribute('class', 'dropdown')
             ->setChildrenAttributes(array('class' => 'dropdown-menu', 'role' => 'menu'));
-        $menu['Projects']->addChild('Projects list', array('route' => 'oro_project'));
-        $menu['Projects']->addChild('Create Project', array('route' => 'oro_project_create'));
+        $menu['Projects']->addChild('Projects list', array(
+            'label' => $this->container->get('translator')->trans('menu.projects_list'),
+            'route' => 'oro_project'
+        ));
+        $menu['Projects']->addChild('Create Project', array(
+            'label' => $this->container->get('translator')->trans('menu.projects_create'),
+            'route' => 'oro_project_create'
+        ));
 
         $menu->addChild('Issues', array(
+            'label' => $this->container->get('translator')->trans('menu.issues'),
             'route' => 'oro_issue',
             'extras' => array(
                 'routes' => array(
@@ -87,10 +101,19 @@ class Builder extends ContainerAware
         ))
             ->setAttribute('class', 'dropdown')
             ->setChildrenAttributes(array('class' => 'dropdown-menu', 'role' => 'menu'));
-        $menu['Issues']->addChild('Issues List', array('route' => 'oro_issue'));
-        $menu['Issues']->addChild('Create Issue', array('route' => 'oro_issue_create'));
+        $menu['Issues']->addChild('Issues List', array(
+            'label' => $this->container->get('translator')->trans('menu.issues_list'),
+            'route' => 'oro_issue'
+        ));
+        $menu['Issues']->addChild('Create Issue', array(
+            'label' => $this->container->get('translator')->trans('menu.issues_create'),
+            'route' => 'oro_issue_create'
+        ));
 
-        $menu->addChild('Log out', array('route' => 'logout'));
+        $menu->addChild('Log out', array(
+            'label' => $this->container->get('translator')->trans('menu.logout'),
+            'route' => 'logout'
+        ));
 
         return $menu;
     }

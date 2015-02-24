@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>{% block title %}Oro Tracking{% endblock %}</title>
+    <title>{% block title %}{{ 'main.title'|trans }}{% endblock %}</title>
     {% if app.security.token %}
         Welcome, {{ app.security.token.user.username }}!
     {% endif %}

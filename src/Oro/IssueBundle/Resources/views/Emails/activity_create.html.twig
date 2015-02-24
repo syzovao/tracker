@@ -1,4 +1,4 @@
-Issue {{ issue.code }} : {{ issue.summary }}
-Created by {{ user.username }} at {% if issue.createdAt %}{{ issue.createdAt|date('Y-m-d H:i:s') }}{% endif %}.
+{{ "issue.issue_title"|trans }} {{ issue.code }} : {{ issue.summary }}
+{{ "issue.activity.fields.created_by"|trans }} {{ user.username }}  {% if issue.createdAt %}{{ issue.createdAt|date('Y-m-d H:i:s') }}{% endif %}.
 
 {{ description }}

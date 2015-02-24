@@ -1,12 +1,12 @@
 {% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>IssueComment edit</h1>
+    <h1>{{ 'issue.comment.label_comment'|trans }}</h1>
     {{ form(edit_form) }}
     <ul class="record_actions">
         <li>
             <a href="{{ path('oro_issue_view', { 'id': entity.issue.id }) }}">
-                Back to issue
+                {{ 'navigation.back_to_issue'|trans }}
             </a>
         </li>
         {{ form(delete_form) }}
