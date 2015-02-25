@@ -5,6 +5,10 @@ imports:
 
 framework:
     #esi:             ~
+    translator:
+        enabled:    true
+        fallback:   en
+        logging:    true
     #translator:      { fallback: "%locale%" }
     secret:          "%secret%"
     router:
@@ -42,7 +46,8 @@ knp_menu:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ ]
+    bundles: [ AppBundle, OroUserBundle, OroIssueBundle, OroProjectBundle ]
+    #bundles:        [ ]
     #java: /usr/bin/java
     filters:
         cssrewrite: ~

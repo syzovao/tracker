@@ -3,3 +3,5 @@ issue.validators.parent_empty: 'Please, set parent issue for sub-task.'
 issue.validators.parent_wrong_project: "Only issue assigned to selected project could be set as parent."
 issue.validators.parent_the_same: "The same Issue can't be set as parent."
 issue.validators.parent_only_for_subtask: 'You could set parent issue only for sub-task. Please, leave parent field blank'
+issue.validators.comment.permissions_denied_delete: "You can't delete this message."
+issue.validators.comment.permissions_denied_edit: "You can't edit this message."

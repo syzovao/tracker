@@ -120,14 +120,14 @@ class CommentController extends Controller
      */
     public function updateAction(IssueComment $entity, Request $request)
     {
-//        if (false === $this->get('security.authorization_checker')->isGranted('EDIT', $entity)) {
-//            throw new AccessDeniedException();
-//        }
-
         if (!$entity) {
             throw $this->createNotFoundException(
                 $this->get('translator')->trans('issue.messages.entity_comment_not_found')
             );
+        }
+
+        if (!$this->get('security.authorization_checker')->isGranted('EDIT', $entity)) {
+            throw $this->createAccessDeniedException('issue.validators.comment.permissions_denied_edit');
         }
 
         $deleteForm = $this->createDeleteForm($entity);
@@ -159,9 +159,9 @@ class CommentController extends Controller
      */
     public function deleteAction(IssueComment $entity)
     {
-//        if (false === $this->get('security.authorization_checker')->isGranted('EDIT', $entity)) {
-//            throw new AccessDeniedException();
-//        }
+        if (!$this->get('security.authorization_checker')->isGranted('DELETE', $entity)) {
+            throw $this->createAccessDeniedException('issue.validators.comment.permissions_denied_delete');
+        }
 
         $issueId = $entity->getIssue()->getId();
         $em = $this->getDoctrine()->getManager();

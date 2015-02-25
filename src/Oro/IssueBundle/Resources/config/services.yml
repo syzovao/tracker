@@ -22,3 +22,10 @@ services:
         arguments: ["@service_container"]
         tags:
             - { name: doctrine.event_listener, event: postPersist }
+
+    oro.security.comment_voter:
+        class: Oro\IssueBundle\Security\CommentVoter
+        public: false
+        arguments: ["@service_container"]
+        tags:
+            - { name: security.voter }
