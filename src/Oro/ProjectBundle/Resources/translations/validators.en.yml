@@ -1,1 +1,4 @@
 project.validators.code_in_use: 'This code is already in use.'
+project.validators.permissions_denied_viewlist: "You can't view projects."
+project.validators.permissions_denied_view: "You can't view this project."
+project.validators.permissions_denied_modify: "You can't modify this project."

@@ -11,7 +11,7 @@ use Oro\IssueBundle\Entity\Issue;
  * Project
  *
  * @ORM\Table(name="oro_projects")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Oro\ProjectBundle\Entity\ProjectRepository")
  */
 class Project
 {
@@ -163,7 +163,7 @@ class Project
     /**
      * Get users
      *
-     * @return string 
+     * @return ArrayCollection
      */
     public function getUsers()
     {
@@ -234,4 +234,33 @@ class Project
     {
         return $this->name;
     }
+
+    /**
+     * Return if user is assigned to project
+     *
+     * @param User $user
+     * @return bool
+     */
+    public function hasUser(User $user)
+    {
+        return $this->getUsers()->contains($user);
+    }
+
+    /**
+     * Return if user is a member of project
+     *
+     * @param string $username
+     * @return bool
+     */
+    public function isProjectMember($username)
+    {
+        $users = $this->getUsers();
+        foreach ($users as $user) {
+            if($user->getUsername() == $username) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

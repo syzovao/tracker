@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <title>{% block title %}{{ 'main.title'|trans }}{% endblock %}</title>
     {% if app.security.token %}
-        Welcome, {{ app.security.token.user.username }}!
+        {{ 'main.label_welcome'|trans }}, {{ app.security.token.user.username }}!
     {% endif %}
 
     {% stylesheets '@bootstrap_css' %}

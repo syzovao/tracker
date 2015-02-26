@@ -6,9 +6,11 @@
         <li><a href="{{ path('oro_project_view', { 'id': entity.project.id })}}">{{ entity.project }}</a></li>
         <li><a href="{{ path('oro_issue_view', { 'id': entity.id }) }}">{{ entity.code }}</a></li>
     </ol>
-    <ul class="nav nav-pills">
-        <li>{{ form(delete_form) }}</li>
-    </ul>
+    {% if is_granted('ROLE_ADMIN') %}
+        <ul class="nav nav-pills">
+            <li>{{ form(delete_form) }}</li>
+        </ul>
+    {% endif %}
 
     {{ form_start(edit_form) }}
     {{ form_rest(edit_form) }}

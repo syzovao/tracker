@@ -6,10 +6,23 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\ORM\EntityRepository;
-
+use Oro\ProjectBundle\Entity\ProjectRepository;
+use Oro\UserBundle\Entity\User;
 
 class IssueType extends AbstractType
 {
+    private $currentUser;
+
+    /**
+     * Constructor
+     *
+     * @param User $currentUser
+     */
+    public function __construct( User $currentUser )
+    {
+        $this->currentUser = $currentUser;
+    }
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -67,15 +80,30 @@ class IssueType extends AbstractType
                 'multiple' => false,
                 'attr' => array('class'=>'form-control')
             ));
-        $builder->add('parent');
-        $builder->add('project', 'entity', array(
-                'required' => true,
-                'property_path' => 'project',
-                'class' => 'OroProjectBundle:Project',
-                'property' => 'name',
-                'multiple' => false,
-                'attr' => array('class'=>'form-control')
-            ));
+
+        $builder->add('parent','entity', array(
+                'required' => false,
+                'class' => 'OroIssueBundle:Issue',
+                'property' => 'getFullParent',
+            )
+        );
+
+        $options = array(
+            'required' => true,
+            'property_path' => 'project',
+            'class' => 'OroProjectBundle:Project',
+            'property' => 'name',
+            'multiple' => false,
+            'attr' => array('class'=>'form-control')
+        );
+
+        if ($this->currentUser && $this->currentUser->getRole() == 'ROLE_USER') {
+            $currentUserId = $this->currentUser->getId();
+            $options['query_builder'] = function (ProjectRepository $er) use ($currentUserId) {
+                return $er->queryProjectMember($currentUserId);
+            };
+        }
+        $builder->add('project', 'entity', $options);
     }
     
     /**

@@ -87,7 +87,7 @@ class IssueController extends Controller
      */
     private function createCreateForm(Issue $entity)
     {
-        $form = $this->createForm(new IssueType(), $entity);
+        $form = $this->createForm(new IssueType($this->getUser()), $entity);
         $form->add('submit', 'submit', array('label' => 'Create'));
         return $form;
     }
@@ -123,7 +123,7 @@ class IssueController extends Controller
      */
     private function createEditForm(Issue $entity)
     {
-        $form = $this->createForm(new IssueType(), $entity);
+        $form = $this->createForm(new IssueType($this->getUser()), $entity);
         $form->add('submit', 'submit', array('label' => 'Update'));
         return $form;
     }
@@ -143,11 +143,11 @@ class IssueController extends Controller
     public function updateAction(Issue $entity, Request $request)
     {
         $errors = array();
-        if (false === $this->get('security.authorization_checker')->isGranted(array('ROLE_ADMIN', 'ROLE_USER'))) {
-            throw new AccessDeniedException();
-        }
         if (!$entity) {
             throw $this->createNotFoundException($this->get('translator')->trans('issue.messages.entity_not_found'));
+        }
+        if (false === $this->get('security.authorization_checker')->isGranted('ACCESS', $entity)) {
+            throw new AccessDeniedException();
         }
 
         $deleteForm = $this->createDeleteForm($entity);

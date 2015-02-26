@@ -24,16 +24,19 @@
                         <td>{{ entity.description }}</td>
                         <td>
                             <a href="{{ path('oro_project_view', { 'id': entity.id }) }}" class="btn btn-info btn-xs" role="button" >{{ 'buttons.view'|trans }}</a>
-                            <a href="{{ path('oro_project_update', { 'id': entity.id }) }}" class="btn btn-info btn-xs" role="button" >{{ 'buttons.edit'|trans }}</a>
+                            {% if(is_granted('MODYFY', entity)) %}
+                                <a href="{{ path('oro_project_update', { 'id': entity.id }) }}" class="btn btn-info btn-xs" role="button" >{{ 'buttons.edit'|trans }}</a>
+                            {% endif %}
                         </td>
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
-
-            <a href="{{ path('oro_project_create') }}" class="btn btn-info btn-s" role="button">
-                {{ 'buttons.create'|trans }}
-            </a>
+            {% if(is_granted('ROLE_ADMIN') or is_granted('ROLE_MANAGER')) %}
+                <a href="{{ path('oro_project_create') }}" class="btn btn-info btn-s" role="button">
+                    {{ 'buttons.create'|trans }}
+                </a>
+            {% endif %}
         </div>
     </div>
 

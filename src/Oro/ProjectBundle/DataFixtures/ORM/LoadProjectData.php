@@ -30,9 +30,13 @@ class LoadProjectData extends AbstractFixture implements DependentFixtureInterfa
      */
     public function load(ObjectManager $manager)
     {
+        /** @var \Oro\UserBundle\Entity\User $userAdmin */
         $userAdmin = $this->getReference('user-admin');
+        /** @var \Oro\UserBundle\Entity\User $userManager */
         $userManager = $this->getReference('user-manager');
+        /** @var \Oro\UserBundle\Entity\User $userOperator1 */
         $userOperator1 = $this->getReference('user-operator1');
+        /** @var \Oro\UserBundle\Entity\User $userOperator2 */
         $userOperator2 = $this->getReference('user-operator2');
 
         $project1 = new Project();

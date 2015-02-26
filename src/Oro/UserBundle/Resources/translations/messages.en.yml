@@ -21,3 +21,8 @@ user.fields.avatar: Avatar
 user.fields.actions: Actions
 user.create_page_title: OroUserBundle:User:create
 user.messages.entity_not_found: Unable to find User entity.
+user.homepage_title: OroUserBundle:Homepage
+user.label_my_activities: My Activities
+user.label_my_issues: My Issues
+user.label_user: User
+user.label_issue: Issue

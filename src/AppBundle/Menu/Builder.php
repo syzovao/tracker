@@ -19,6 +19,8 @@ class Builder extends ContainerAware
      */
     public function mainMenu(FactoryInterface $factory, array $options)
     {
+        $authChecker = $this->container->get('security.authorization_checker');
+
         $menu = $factory->createItem('root');
 
         $menu->setChildrenAttribute('class', 'nav nav-pills');
@@ -45,13 +47,24 @@ class Builder extends ContainerAware
             ->setAttribute('class', 'dropdown')
             ->setChildrenAttributes(array('class' => 'dropdown-menu', 'role' => 'menu'));
 
-        $menu['Users']->addChild('Users list', array(
-            'label' => $this->container->get('translator')->trans('menu.users_list'),
-            'route' => 'oro_user_index'
-        ));
-        $menu['Users']->addChild('User create', array(
-            'label' => $this->container->get('translator')->trans('menu.users_create'),
-            'route' => 'oro_user_create'
+        if (!false === $authChecker->isGranted(array('ROLE_ADMIN', 'ROLE_MANAGER'))) {
+            $menu['Users']->addChild('Users list', array(
+                'label' => $this->container->get('translator')->trans('menu.users_list'),
+                'route' => 'oro_user_index'
+            ));
+        }
+        if (!false === $authChecker->isGranted('ROLE_ADMIN')) {
+            $menu['Users']->addChild('User create', array(
+                'label' => $this->container->get('translator')->trans('menu.users_create'),
+                'route' => 'oro_user_create'
+            ));
+        }
+
+        $currentUser = $this->container->get('security.token_storage')->getToken()->getUser();
+        $menu['Users']->addChild('My profile', array(
+            'label' => $this->container->get('translator')->trans('menu.users_profile'),
+            'route' => 'oro_user_view',
+            'routeParameters' => array('id' => $currentUser->getId())
         ));
 
         $menu->addChild('Projects', array(
@@ -77,10 +90,13 @@ class Builder extends ContainerAware
             'label' => $this->container->get('translator')->trans('menu.projects_list'),
             'route' => 'oro_project'
         ));
-        $menu['Projects']->addChild('Create Project', array(
-            'label' => $this->container->get('translator')->trans('menu.projects_create'),
-            'route' => 'oro_project_create'
-        ));
+
+        if (!false === $authChecker->isGranted(array('ROLE_ADMIN', 'ROLE_MANAGER'))) {
+            $menu['Projects']->addChild('Create Project', array(
+                'label' => $this->container->get('translator')->trans('menu.projects_create'),
+                'route' => 'oro_project_create'
+            ));
+        }
 
         $menu->addChild('Issues', array(
             'label' => $this->container->get('translator')->trans('menu.issues'),

@@ -1,19 +1,19 @@
 {% extends '::base.html.twig' %}
-{% block title %}OroUserBundle:Homepage:update{% endblock %}
+{% block title %}{{ 'user.homepage_title'|trans }}{% endblock %}
 
 {% block body %}
-    <h1 class="page-header">User: {{ app.user.username }}</h1>
+    <h1 class="page-header">{{ 'user.label_user'|trans }}: {{ app.user.username }}</h1>
     <div class="list-group">
-        <a href="#" class="list-group-item active">My Issues</a>
+        <a href="#" class="list-group-item active">{{ 'user.label_my_issues'|trans }}</a>
         {% for issue in issues %}
             <a class="list-group-item" href="{{ path('oro_issue_view', { 'id': issue.id }) }}">{{ issue.code}}: {{ issue.summary}} ({{ issue.project }})</a>
         {% endfor %}
     </div>
     <div class="list-group">
-        <a href="#" class="list-group-item active">My Activities</a>
+        <a href="#" class="list-group-item active">{{ 'user.label_my_activities'|trans }}</a>
         {% for activity in activities %}
             <a class="list-group-item" href="{{ path('oro_issue_view', { 'id': activity.issue.id }) }}">
-                ({{ activity.issue.project }}) Issue: {{ activity.issue}}
+                ({{ activity.issue.project }}) {{ 'user.label_issue'|trans }}: {{ activity.issue}}
                 {{ activity.code}}</a>
         {% endfor %}
     </div>

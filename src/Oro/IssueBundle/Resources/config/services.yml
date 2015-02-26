@@ -29,3 +29,10 @@ services:
         arguments: ["@service_container"]
         tags:
             - { name: security.voter }
+
+    oro.security.issue_voter:
+        class: Oro\IssueBundle\Security\IssueVoter
+        public: false
+        arguments: ["@service_container"]
+        tags:
+            - { name: security.voter }

@@ -43,12 +43,14 @@ class UserController extends Controller
         $repository = $this->getDoctrine()->getRepository('OroUserBundle:User');
         $user = $repository->findOneById($id);
 
-        $em = $this->getDoctrine()->getManager();
-        $issues = $em->getRepository('OroIssueBundle:Issue')->findByUser($user->getId());
         if (!$user) {
             $message = $this->get('translator')->trans('No account found for id %id%', array('%id%' => $id));
             throw $this->createNotFoundException($message);
         }
+
+        $em = $this->getDoctrine()->getManager();
+        $issues = $em->getRepository('OroIssueBundle:Issue')->findByUser($user->getId());
+
         return array(
             'user' => $user,
             'issues' => $issues,
@@ -68,7 +70,7 @@ class UserController extends Controller
     public function createAction(Request $request)
     {
         $errors = array();
-        if (false === $this->get('security.authorization_checker')->isGranted(array('ROLE_ADMIN', 'ROLE_USER'))) {
+        if (false === $this->get('security.authorization_checker')->isGranted(array('ROLE_ADMIN'))) {
             throw new AccessDeniedException();
         }
 
@@ -104,23 +106,34 @@ class UserController extends Controller
     public function updateAction(Request $request, $id)
     {
         $errors = array();
-        if (false === $this->get('security.authorization_checker')->isGranted(array('ROLE_ADMIN', 'ROLE_USER'))) {
-            throw new AccessDeniedException();
-        }
-
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('OroUserBundle:User')->find($id);
+
+        if (false === $this->get('security.authorization_checker')->isGranted('MODIFY', $user)) {
+            throw new AccessDeniedException('user.validators.permissions_denied_edit');
+        }
 
         if (!$user) {
             throw $this->createNotFoundException($this->get('translator')->trans('user.messages.entity_not_found'));
         }
 
         $form = $this->createForm(new UserType($em), $user);
+
         //$form->remove('password');
+        if (false === $this->get('security.authorization_checker')->isGranted('EDIT_ROLE', $user)) {
+            $field = $form->get('role')->getConfig();
+            $options = $field->getOptions();
+            $type = $field->getType()->getName();
+            $options['read_only'] = true;
+            $form->add('role', $type, $options);
+        }
+
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $user = $form->getData();
+            $encoder = $this->container->get('security.encoder_factory')->getEncoder($user);
+            $user->setPassword($encoder->encodePassword($user->getPassword(), $user->getSalt()));
             $user->upload();
             $em->persist($user);
             $em->flush();

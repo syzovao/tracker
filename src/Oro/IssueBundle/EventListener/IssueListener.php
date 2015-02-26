@@ -83,8 +83,7 @@ class IssueListener
             if ($eventArgs->hasChangedField('issueStatus')) {
                 $old = $eventArgs->getOldValue('issueStatus')->getName();
                 $new = $eventArgs->getNewValue('issueStatus')->getName();
-                $description = sprintf('status changed from "%s" to "%s"', $old, $new);
-
+                $description = sprintf("Issue status changed from %s to %s", $old, $new);
                 $activity = $this->createActivity(
                     $this->getUser(),
                     $entity,

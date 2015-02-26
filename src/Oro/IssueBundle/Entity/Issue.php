@@ -363,6 +363,11 @@ class Issue
         return $this->parent;
     }
 
+    function getFullParent()
+    {
+        return sprintf('%s - %s', $this->code, $this->issueType);
+    }
+
     /**
      * Set children
      *

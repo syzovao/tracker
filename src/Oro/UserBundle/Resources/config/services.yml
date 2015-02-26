@@ -1,4 +1,8 @@
 services:
-#    oro_user.example:
-#        class: Oro\UserBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
+
+    oro.security.user_voter:
+        class: Oro\UserBundle\Security\UserVoter
+        public: false
+        arguments: ["@service_container"]
+        tags:
+            - { name: security.voter }

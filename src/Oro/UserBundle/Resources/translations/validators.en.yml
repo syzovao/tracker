@@ -1,3 +1,9 @@
 user.validators.email_not_blank: 'Please enter an user email.'
 user.validators.email_in_use: 'This email is already in use.'
 user.validators.username_in_use: 'This username is already in use.'
+user.validators.permissions_denied_create: "You can't create user."
+user.validators.permissions_denied_edit_role: "You can't edit role."
+user.validators.permissions_denied_edit: "You can't edit this issue."
+user.validators.permissions_denied_view: "You can't view this issue."
+user.validators.permissions_denied_viewlist: "You can't view issues."
+user.validators.password_match: "The password fields must match."

@@ -30,7 +30,13 @@ class ProjectController extends Controller
     {
         /** @var \Doctrine\ORM\EntityManager $em */
         $em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository('OroProjectBundle:Project')->findAll();
+        $username = $this->getUser()->getUsername();
+        $entity = new Project();
+        if (false === $this->get('security.authorization_checker')->isGranted('VIEW_LIST', $entity, $username)) {
+            $entities = $em->getRepository('OroProjectBundle:Project')->findByProjectMember($this->getUser()->getId());
+        } else {
+            $entities = $em->getRepository('OroProjectBundle:Project')->findAll();
+        }
         return array(
             'entities' => $entities,
         );
@@ -48,12 +54,12 @@ class ProjectController extends Controller
      */
     public function createAction(Request $request)
     {
-        if (false === $this->get('security.authorization_checker')->isGranted(array('ROLE_ADMIN', 'ROLE_USER'))) {
-            throw new AccessDeniedException();
+        $entity = new Project();
+        if (false === $this->get('security.authorization_checker')->isGranted('MODIFY', $entity)) {
+            throw new AccessDeniedException('project.validators.permissions_denied_modify');
         }
 
         $em = $this->getDoctrine()->getManager();
-        $entity = new Project();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -85,6 +91,11 @@ class ProjectController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException($this->get('translator')->trans('project.messages.entity_not_found'));
         }
+
+        if (false === $this->get('security.authorization_checker')->isGranted('VIEW', $entity)) {
+            throw new AccessDeniedException('project.validators.permissions_denied_view');
+        }
+
         $deleteForm = $this->createDeleteForm($entity);
 
         return array(
@@ -108,11 +119,11 @@ class ProjectController extends Controller
     public function updateAction(Project $entity, Request $request)
     {
         $errors = array();
-        if (false === $this->get('security.authorization_checker')->isGranted(array('ROLE_ADMIN', 'ROLE_USER'))) {
-            throw new AccessDeniedException();
-        }
         if (!$entity) {
             throw $this->createNotFoundException($this->get('translator')->trans('project.messages.entity_not_found'));
+        }
+        if (false === $this->get('security.authorization_checker')->isGranted('MODIFY', $entity)) {
+            throw new AccessDeniedException('project.validators.permissions_denied_modify');
         }
 
         $deleteForm = $this->createDeleteForm($entity);
@@ -146,6 +157,10 @@ class ProjectController extends Controller
      */
     public function deleteAction(Project $entity, Request $request)
     {
+        if (false === $this->get('security.authorization_checker')->isGranted('MODIFY', $entity)) {
+            throw new AccessDeniedException('project.validators.permissions_denied_modify');
+        }
+
         $form = $this->createDeleteForm($entity);
         $form->handleRequest($request);
 

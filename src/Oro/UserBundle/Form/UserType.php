@@ -29,9 +29,16 @@ class UserType extends AbstractType
             ->add('email', 'email')
             ->add('username', 'text')
             ->add('fullname', 'text')
-            ->add('avatar_path', 'hidden')
-            ->add('password', 'password');
-        $choices = $this->getRolesChoices();
+            ->add('avatar_path', 'hidden');
+        $builder->add('password', 'repeated', array(
+            'type' => 'password',
+            'invalid_message' => 'user.validators.password_match',
+            'options' => array('attr' => array('class' => 'password-field')),
+            'required' => true,
+            'first_options'  => array('label' => 'Password'),
+            'second_options' => array('label' => 'Repeat Password'),
+        ));
+         $choices = $this->getRolesChoices();
         $builder->add('role', 'choice', array(
             'label' => 'Role:',
             'choices' => $choices

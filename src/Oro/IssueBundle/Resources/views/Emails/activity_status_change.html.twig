@@ -1,5 +1,5 @@
 {{ "issue.issue_title"|trans }} {{ issue.code }} : {{ issue.summary }}
-{{ "issue.activity.fields.changed_by"|trans }} {{ user.username }} {% if issue.updatedAt %}{{ issue.updatedAt|date('Y-m-d H:i:s') }}{% endif %}.
+{{ "issue.activity.fields.changed_by"|trans }} {{ user.username }}
 {{ "issue.fields.status"|trans }}: {{ issue.issueStatus }}
-
 {{ description }}
+ {% if issue.updatedAt %}{{ issue.updatedAt|date('Y-m-d H:i:s') }}{% endif %}.

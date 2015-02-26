@@ -5,3 +5,7 @@ issue.validators.parent_the_same: "The same Issue can't be set as parent."
 issue.validators.parent_only_for_subtask: 'You could set parent issue only for sub-task. Please, leave parent field blank'
 issue.validators.comment.permissions_denied_delete: "You can't delete this message."
 issue.validators.comment.permissions_denied_edit: "You can't edit this message."
+issue.validators.permissions_denied_delete: "You can't delete this issue."
+issue.validators.permissions_denied_edit: "You can't edit this issue."
+issue.validators.permissions_denied_view: "You can't view this issue."
+issue.validators.permissions_denied_viewlist: "You can't view issues."

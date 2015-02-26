@@ -33,6 +33,7 @@ class ActivityListener
             return;
         }
 
+        $user = $entity->getUser();
         $issue = $entity->getIssue();
         $collaborators = $issue->getCollaborators();
         if(!empty($collaborators)) {
@@ -42,8 +43,8 @@ class ActivityListener
             $subject = '(' . $issue->getProject() . ')' . $issue->getCode() . ': ' . $issue->getSummary();
 
             $sendTo = array();
-            foreach ($collaborators as $user) {
-                $sendTo[] = $user->getEmail();
+            foreach ($collaborators as $collaborator) {
+                $sendTo[] = $collaborator->getEmail();
             }
             $message = \Swift_Message::newInstance()
                 ->setSubject($subject)

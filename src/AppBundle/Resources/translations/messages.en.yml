@@ -3,6 +3,7 @@ menu:
     users: Users
     users_list: Users list
     users_create: Create User
+    users_profile: My Profile
     projects: Projects
     projects_list: Projects list
     projects_create: Create Project
@@ -24,6 +25,8 @@ navigation:
     create_new_user: 'Create New User'
     create_new_project: 'Create New Project'
     create_new_issue: 'Create New Issue'
+    view_user_profile: 'View My Profile'
 
 main:
     title: Oro Tracking
+    label_welcome: Welcome

@@ -32,7 +32,9 @@
         {% endfor %}
     </div>
 
-    <ul class="record_actions list-inline">
-        <li><a href="{{ path('oro_user_index') }}">{{ 'navigation.back_to_list'|trans }}</a></li>
-    </ul>
+    {% if is_granted('VIEW_LIST', app.security.token.user) %}
+        <ul class="record_actions list-inline">
+            <li><a href="{{ path('oro_user_index') }}">{{ 'navigation.back_to_list'|trans }}</a></li>
+        </ul>
+    {% endif %}
 {% endblock %}

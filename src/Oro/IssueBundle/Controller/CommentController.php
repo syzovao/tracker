@@ -59,7 +59,6 @@ class CommentController extends Controller
         if ($form->isValid()) {
             $entity->setUser($this->getUser());
 
-            /** @var EntityManager $em */
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
