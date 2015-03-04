@@ -14,3 +14,10 @@ web_profiler:
 
 swiftmailer:
     disable_delivery: true
+
+security:
+    firewalls:
+        user_secured_area:
+            http_basic: ~
+            form_login: true
+            remember_me: false

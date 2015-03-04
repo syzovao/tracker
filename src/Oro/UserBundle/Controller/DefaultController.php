@@ -12,7 +12,7 @@ class DefaultController extends Controller
      * @Route("/", name="dashboard")
      * @Template("OroUserBundle:Default:index.html.twig")
      */
-    public function indexAction()
+    public function dashboardAction()
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();

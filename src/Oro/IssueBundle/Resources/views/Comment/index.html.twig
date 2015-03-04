@@ -7,7 +7,7 @@
             at {% if comment.createdAt %}{{ comment.createdAt|date('Y-m-d H:i:s') }}{% endif %}
             <div class="pull-right">
                 {% if is_granted('EDIT', comment) %}
-                    <a href="{{ path('oro_comment_update', { 'id': comment.id }) }}">{{ 'buttons.edit'|trans }}</a>
+                    <a class="comment_edit" href="{{ path('oro_comment_update', { 'id': comment.id }) }}">{{ 'buttons.edit_comment'|trans }}</a>
                 {% endif %}
                 {% if is_granted('DELETE', comment) %}
                     | <a href="{{ path('oro_comment_delete', { 'id': comment.id }) }}">{{ 'buttons.delete'|trans }}</a>

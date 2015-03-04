@@ -1,6 +1,6 @@
 'No account found for id %id%': 'No account found for id %id%'
 user.login_page_title: 'Login page'
-user.view_page_title: 'Welcome to the User:view page'
+user.view.page_header_welcome: 'Welcome to the User:view page'
 user.view.page_title: 'OroUserBundle:User:view'
 user.view.page_header: 'User view'
 user.update_page_title: 'Welcome to the User:update page'

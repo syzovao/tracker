@@ -76,7 +76,7 @@ class Issue
      * @var IssueResolution
      *
      * @ORM\ManyToOne(targetEntity="Oro\IssueBundle\Entity\IssueResolution")
-     * @ORM\JoinColumn(name="issue_resolution_code", referencedColumnName="code")
+     * @ORM\JoinColumn(name="issue_resolution_code", referencedColumnName="code", onDelete="SET NULL")
      */
     private $issueResolution;
 
@@ -101,8 +101,8 @@ class Issue
      *
      * @ORM\ManyToMany(targetEntity="Oro\UserBundle\Entity\User")
      * @ORM\JoinTable(name="oro_issue_collaborators",
-     *      joinColumns={@ORM\JoinColumn(name="issue_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
+     *      joinColumns={@ORM\JoinColumn(name="issue_id", referencedColumnName="id", onDelete="CASCADE")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="CASCADE")}
      *      )
      **/
     private $collaborators;
@@ -111,7 +111,7 @@ class Issue
      * @var integer
      *
      * @ORM\ManyToOne(targetEntity="Oro\IssueBundle\Entity\Issue", inversedBy="children")
-     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", onDelete="CASCADE")
      **/
     private $parent;
 

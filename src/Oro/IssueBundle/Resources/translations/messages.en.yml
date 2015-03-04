@@ -33,6 +33,7 @@ issue.activity.label_activity: Activity
 issue.activity.fields.changed_by: Changed by
 issue.activity.fields.created_by: Created by
 issue.activity.fields.commented_by: Commented by
+issue.comment.label_comment_edit: Comment Edit
 issue.comment.label_comment: Comment
 issue.comment.label_comments: Comments
 issue.comment.posted_by: Posted by

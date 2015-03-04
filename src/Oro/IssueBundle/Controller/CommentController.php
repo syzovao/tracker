@@ -26,7 +26,7 @@ class CommentController extends Controller
      *
      * @Route("/", name="oro_comment")
      * @Method("GET")
-     * @Template()
+     * @Template("OroIssueBundle:Comment:index.html.twig")
      */
     public function indexAction()
     {

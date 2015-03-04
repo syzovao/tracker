@@ -1,6 +1,6 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}{{ 'user.login_page_title'|trans }}OroUserBundle:Security:login{% endblock %}
+{% block title %}{{ 'user.login_page_title'|trans }}{% endblock %}
 
 {% block body %}
     <h1>{{ 'user.login_page_title'|trans }}</h1>
@@ -22,6 +22,6 @@
         <input type="hidden" name="_target_path" value="/account" />
         #}
         <input type="hidden" name="_target_path" value="/user" />
-        <button type="submit">login</button>
+        <button type="submit" name="login">{{ 'buttons.login'|trans }}</button>
     </form>
 {% endblock %}

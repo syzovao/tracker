@@ -22,6 +22,7 @@ class AppKernel extends Kernel
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Oro\ProjectBundle\OroProjectBundle(),
             new Oro\IssueBundle\OroIssueBundle(),
+            new Oro\TestBundle\OroTestBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

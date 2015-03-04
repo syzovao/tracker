@@ -2,54 +2,159 @@
 
 namespace Oro\ProjectBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Oro\TestBundle\Test\WebTestCase;
 
 class ProjectControllerTest extends WebTestCase
 {
-    /*
-    public function testCompleteScenario()
+    const PROJECT_NAME = 'Test Project 1';
+    const PROJECT_NAME_NEW = 'Test Project 2';
+    const PROJECT_DESCRIPTION = 'Test Project 1 DESCRIPTION';
+    const PROJECT_DESCRIPTION_NEW = 'Test Project 2 DESCRIPTION';
+    const PROJECT_CODE = 'TEST_PROJECT_1';
+    const PROJECT_CODE_NEW = 'TEST_PROJECT_2';
+
+    protected function setUp()
+    {
+        $this->initClient(array(), $this->generateBasicAuthHeader());
+    }
+
+    public function testIndex()
     {
         // Create a new client to browse the application
-        $client = static::createClient();
+        $client = $this->client;
 
-        // Create a new entry in the database
-        $crawler = $client->request('GET', '/project/');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /project/");
-        $crawler = $client->click($crawler->selectLink('Create a new entry')->link());
+        $crawler = $client->request('GET', $this->getUrl('oro_project'));
+        $this->assertEquals(
+            200,
+            $this->client->getResponse()->getStatusCode(),
+            "Unexpected HTTP status code for GET /project/"
+        );
+
+        $content = $client->getResponse()->getContent();
+        $this->assertContains($this->getTrans('buttons.view'), $content);
+        $this->assertCount(
+            1,
+            $crawler->filter('h1.page-header:contains("' . $this->getTrans('project.project_list_header') . '")')
+        );
+    }
+
+    public function testView()
+    {
+        // Create a new client to browse the application
+        $client = $this->client;
+        $crawler = $client->request('GET', $this->getUrl('oro_project'));
+
+        $content = $client->getResponse()->getContent();
+        $this->assertContains($this->getTrans('buttons.view'), $content);
+        $this->assertCount(
+            1,
+            $crawler->filter('h1.page-header:contains("' . $this->getTrans('project.label_project') . '")')
+        );
+
+        // click on the secure link
+        $link = $crawler->selectLink($this->getTrans('buttons.view'))->link();
+        $crawler = $client->click($link);
+        $content = $client->getResponse()->getContent();
+        $this->assertContains('PROJECT_1', $content);
+
+        // click on the secure link
+        $link = $crawler->selectLink($this->getTrans('buttons.edit'))->link();
+        $crawler = $client->click($link);
+
+        $content = $client->getResponse()->getContent();
+        $this->assertContains('PROJECT_1', $content);
+        $this->assertCount(
+            1,
+            $crawler->filter('h1.page-header:contains("' . $this->getTrans('project.project_edit_header') . '")')
+        );
+    }
+
+    public function testCreate()
+    {
+        // Create a new client to browse the application
+        $client = $this->client;
+        $crawler = $client->request('GET', $this->getUrl('oro_project_create'));
+
+        $form = $crawler->selectButton($this->getTrans('Create'))->form();
+        // Fill in the form and submit it
+        $form->setValues(array(
+            'oro_projectbundle_project[code]' => self::PROJECT_CODE,
+            'oro_projectbundle_project[name]' => self::PROJECT_NAME,
+            'oro_projectbundle_project[description]' => self::PROJECT_DESCRIPTION,
+        ));
+        $form['oro_projectbundle_project[users]'][0]->tick();
+        $client->submit($form);
+
+        $content = $client->getResponse()->getContent();
+        $this->assertTrue($client->getResponse()->isRedirect());
+        $crawler = $client->followRedirect();
+
+        // Check data in the show view
+        $content = $client->getResponse()->getContent();
+        $this->assertContains(self::PROJECT_CODE, $content);
+        $this->assertContains(self::PROJECT_NAME, $content);
+
+        $url = $client->getHistory()->current()->getUri();
+        $id = $this->getIdFromUrl($url);
+        $this->assertNotNull($id);
+
+        return $id;
+    }
+
+    /**
+     * @param int $id
+     * @depends testCreate
+     * @return mixed
+     */
+    public function testUpdate($id)
+    {
+        // Create a new client to browse the application
+        $client = $this->client;
+        $crawler = $client->request('GET', $this->getUrl('oro_project_update', array('id' => $id)));
+
+        $form = $crawler->selectButton($this->getTrans('Update'))->form();
 
         // Fill in the form and submit it
-        $form = $crawler->selectButton('Create')->form(array(
-            'oro_projectbundle_project[field_name]'  => 'Test',
-            // ... other fields to fill
+        $form->setValues(array(
+            'oro_projectbundle_project[code]' => self::PROJECT_CODE_NEW,
+            'oro_projectbundle_project[name]' => self::PROJECT_NAME_NEW,
+            'oro_projectbundle_project[description]' => self::PROJECT_DESCRIPTION_NEW,
         ));
-
         $client->submit($form);
         $crawler = $client->followRedirect();
 
         // Check data in the show view
-        $this->assertGreaterThan(0, $crawler->filter('td:contains("Test")')->count(), 'Missing element td:contains("Test")');
+        $content = $client->getResponse()->getContent();
+        $this->assertContains(self::PROJECT_CODE_NEW, $content);
+        $this->assertContains(self::PROJECT_NAME_NEW, $content);
 
-        // Edit the entity
-        $crawler = $client->click($crawler->selectLink('Edit')->link());
+        //check in list
+        $this->client->request('GET', $this->getUrl('oro_project'));
+        $this->assertContains(self::PROJECT_CODE_NEW, $client->getResponse()->getContent());
 
-        $form = $crawler->selectButton('Update')->form(array(
-            'oro_projectbundle_project[field_name]'  => 'Foo',
-            // ... other fields to fill
-        ));
-
-        $client->submit($form);
-        $crawler = $client->followRedirect();
-
-        // Check the element contains an attribute with value equals "Foo"
-        $this->assertGreaterThan(0, $crawler->filter('[value="Foo"]')->count(), 'Missing element [value="Foo"]');
-
-        // Delete the entity
-        $client->submit($crawler->selectButton('Delete')->form());
-        $crawler = $client->followRedirect();
-
-        // Check the entity has been delete on the list
-        $this->assertNotRegExp('/Foo/', $client->getResponse()->getContent());
+        return $id;
     }
 
-    */
+    /**
+     * Delete test project by id
+     *
+     * @param int $id
+     * @depends testUpdate
+     * @return int
+     */
+    public function testDelete($id)
+    {
+        // Create a new client to browse the application
+        $client = $this->client;
+
+        $crawler = $client->request('GET', $this->getUrl('oro_project_update', array('id' => $id)));
+        $form = $crawler->selectButton($this->getTrans('buttons.delete'))->form();
+        $client->submit($form);
+        $client->followRedirect();
+
+        $content = $client->getResponse()->getContent();
+        $this->assertNotContains(self::PROJECT_NAME_NEW, $content);
+        $this->assertNotContains(self::PROJECT_CODE_NEW, $content);
+    }
+
 }

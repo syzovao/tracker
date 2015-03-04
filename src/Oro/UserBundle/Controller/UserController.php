@@ -84,7 +84,7 @@ class UserController extends Controller
             $user->upload();
             $em->persist($user);
             $em->flush();
-            return $this->redirect($this->generateUrl('oro_user_index'));
+            return $this->redirect($this->generateUrl('oro_user_view', array('id' => $user->getId())));
         }
 
         return array(

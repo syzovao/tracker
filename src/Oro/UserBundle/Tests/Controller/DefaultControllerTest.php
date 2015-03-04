@@ -2,16 +2,29 @@
 
 namespace Oro\UserBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Oro\TestBundle\Test\WebTestCase;
 
 class DefaultControllerTest extends WebTestCase
 {
-    public function testIndex()
+    /**
+     * Init client
+     */
+    protected function setUp()
     {
-        $client = static::createClient();
+        $this->initClient(array(), $this->generateBasicAuthHeader());
+    }
 
-        $crawler = $client->request('GET', '/hello/Fabien');
-
-        $this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
+    public function testDashboard()
+    {
+        // Create a new client to browse the application
+        $client = $this->client;
+        $url = $this->getUrl('dashboard');
+        $crawler = $client->request('GET', $url);
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $content = $client->getResponse()->getContent();
+        $this->assertContains($this->getTrans('user.homepage_title'), $content);
+        $this->assertContains($this->getTrans('user.label_user'), $content);
+        $this->assertContains($this->getTrans('user.label_my_issues'), $content);
+        $this->assertContains($this->getTrans('user.label_my_activities'), $content);
     }
 }

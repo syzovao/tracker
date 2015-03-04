@@ -15,10 +15,13 @@ menu:
 buttons:
     view: View
     edit: Edit
+    update: Update
     create: Create
+    create_issue: Create Issue
     show: Show
     delete: Delete
-
+    login: Login
+    edit_comment: Edit Comment
 navigation:
     back_to_list: 'Back To List'
     back_to_issue: 'Back to Issue'
@@ -26,6 +29,7 @@ navigation:
     create_new_project: 'Create New Project'
     create_new_issue: 'Create New Issue'
     view_user_profile: 'View My Profile'
+    edit_my_profile: 'Edit My Profile'
 
 main:
     title: Oro Tracking
