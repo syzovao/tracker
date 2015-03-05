@@ -61,7 +61,6 @@ class CommentControllerTest extends WebTestCase
         $content = $client->getResponse()->getContent();
         $this->assertContains(self::TEST_COMMENT, $content);
 
-        // click on the secure link
         $link = $crawler->filter('a.comment_edit')->last()->link();
         $crawler = $client->click($link);
 

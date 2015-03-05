@@ -38,17 +38,18 @@ class UserType extends AbstractType
             'first_options'  => array('label' => 'Password'),
             'second_options' => array('label' => 'Repeat Password'),
         ));
-         $choices = $this->getRolesChoices();
+        $choices = $this->getRolesChoices();
         $builder->add('role', 'choice', array(
             'label' => 'Role:',
             'choices' => $choices
         ));
         $builder->add('avatar_file', 'file', array('required' => false));
 
-        if (!$builder->getData()->getId()) {
-            $builder->add('save', 'submit', array('label' => 'Create'));
-        } else {
+        $data = $builder->getData();
+        if($data && $data->getId()){
             $builder->add('save', 'submit', array('label' => 'Submit'));
+        } else {
+            $builder->add('save', 'submit', array('label' => 'Create'));
         }
     }
     
@@ -82,9 +83,11 @@ class UserType extends AbstractType
     {
         $choices = array();
         $repository = $this->em->getRepository('OroUserBundle:Role');
-        $roles = $repository->findAll();
-        foreach ($roles as $role) {
-            $choices[$role->getRole()] = $role->getName();
+        if(is_object($repository)) {
+            $roles = $repository->findAll();
+            foreach ($roles as $role) {
+                $choices[$role->getRole()] = $role->getName();
+            }
         }
         return $choices;
     }

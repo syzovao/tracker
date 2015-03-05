@@ -15,9 +15,9 @@ class ProjectType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('code')
-            ->add('name')
-            ->add('description')
+            ->add('code', 'text')
+            ->add('name', 'text')
+            ->add('description', 'textarea')
             ->add('users', 'entity', array(
                 'class' => 'OroUserBundle:User',
                 'property' => 'username',

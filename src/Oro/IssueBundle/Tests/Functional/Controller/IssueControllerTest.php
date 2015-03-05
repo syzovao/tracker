@@ -80,6 +80,10 @@ class IssueControllerTest extends WebTestCase
             'oro_issuebundle_issue[code]' => self::ISSUE_CODE,
             'oro_issuebundle_issue[summary]' => self::ISSUE_DESCRIPTION,
             'oro_issuebundle_issue[description]' => self::ISSUE_DESCRIPTION,
+            'oro_issuebundle_issue[issueType]' => 'task',
+            'oro_issuebundle_issue[issuePriority]' => 'trivial',
+            'oro_issuebundle_issue[issueStatus]' => 'open',
+            'oro_issuebundle_issue[issueResolution]' => 'incomplete',
         ));
         $form['oro_issuebundle_issue[assignee]']->select(
             $crawler->filter('#oro_issuebundle_issue_assignee option:contains("admin")')->attr('value')

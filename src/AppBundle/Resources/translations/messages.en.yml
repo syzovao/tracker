@@ -5,7 +5,7 @@ menu:
     users_create: Create User
     users_profile: My Profile
     projects: Projects
-    projects_list: Projects list
+    projects_list: Projects List
     projects_create: Create Project
     issues: Issues
     issues_list: Issues List

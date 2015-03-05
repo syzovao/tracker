@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dnk-comp-003
- * Date: 02.03.2015
- * Time: 10:38
- */
-
 namespace Oro\IssueBundle\Tests\Controller;
 
 use Oro\TestBundle\Test\WebTestCase;

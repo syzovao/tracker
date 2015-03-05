@@ -475,6 +475,16 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * @param ArrayCollection $projects
+     * @return User
+     */
+    public function setProjects($projects)
+    {
+        $this->projects = $projects;
+        return $this;
+    }
+
+    /**
      * Get projects
      *
      * @return \Doctrine\Common\Collections\Collection 
