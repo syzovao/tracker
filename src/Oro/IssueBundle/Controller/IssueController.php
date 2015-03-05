@@ -56,7 +56,7 @@ class IssueController extends Controller
         $entity = new Issue();
         $user = $this->getUser();
         $entity->setAssignee($user);
-        $entity->setCreatedAt();
+
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
         if ($form->isValid()) {
@@ -64,9 +64,11 @@ class IssueController extends Controller
             if ($issueType != IssueTypeEntity::TYPE_SUBTASK) {
                 $entity->setParent(null);
             }
+
             $entity->addCollaborator($user);
             $entity->addCollaborator($entity->getAssignee());
             $entity->setReporter($user);
+
             $em->persist($entity);
             $em->flush();
             return $this->redirect($this->generateUrl('oro_issue_view', array('id' => $entity->getId())));
@@ -159,7 +161,7 @@ class IssueController extends Controller
             if ($issueType != IssueTypeEntity::TYPE_SUBTASK) {
                 $entity->setParent(null);
             }
-            $entity->setUpdatedAt();
+
             $entity->addCollaborator($entity->getAssignee());
             $em = $this->getDoctrine()->getManager();
             $em->flush();

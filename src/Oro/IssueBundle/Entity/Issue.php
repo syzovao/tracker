@@ -263,7 +263,7 @@ class Issue
     /**
      * Get reporter
      *
-     * @return string 
+     * @return User
      */
     public function getReporter()
     {
@@ -341,6 +341,24 @@ class Issue
     }
 
     /**
+     * @ORM\PrePersist
+     */
+    public function beforePersist()
+    {
+        $this->createdAt = new \DateTime('now', new \DateTimeZone('UTC'));
+        $this->addCollaborator($this->getReporter());
+    }
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function beforeSave()
+    {
+        $this->updatedAt = new \DateTime('now', new \DateTimeZone('UTC'));
+    }
+
+    /**
      * Set parent
      *
      * @param Issue $parent
@@ -394,13 +412,13 @@ class Issue
     /**
      * Set createdAt
      *
-     * @ORM\PrePersist
+     * @param \DateTime $createdAt
      * @return Issue
      */
-    public function setCreatedAt()
+    public function setCreatedAt($createdAt)
     {
-        $this->createdAt = new \DateTime('now', new \DateTimeZone('UTC'));
-        $this->updatedAt = new \DateTime('now', new \DateTimeZone('UTC'));
+        $this->createdAt = $createdAt;
+
         return $this;
     }
 
@@ -417,12 +435,12 @@ class Issue
     /**
      * Set updatedAt
      *
-     * @ORM\PrePersist
+     * @param \DateTime $updatedAt
      * @return Issue
      */
-    public function setUpdatedAt()
+    public function setUpdatedAt($updatedAt)
     {
-        $this->updatedAt = new \DateTime('now', new \DateTimeZone('UTC'));
+        $this->updatedAt = $updatedAt;
         return $this;
     }
 
@@ -534,7 +552,7 @@ class Issue
      * @param Project $project
      * @return $this
      */
-    public function setProject(Project $project = null)
+    public function setProject($project = null)
     {
         $this->project = $project;
 

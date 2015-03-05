@@ -45,11 +45,12 @@ class LoadIssueData extends AbstractFixture implements DependentFixtureInterface
 
         /** @var \Oro\IssueBundle\Entity\Issue $issue1 */
         $issue1 = new Issue();
+        $now = new \DateTime('now', new \DateTimeZone('UTC'));
         $issue1
             ->setCode('ISSUE_1')
             ->setSummary('Issue 1 Summary')
             ->setDescription('Issue 1 Description')
-            ->setCreatedAt()
+            ->setCreatedAt($now)
             ->setUpdatedBy($userAdmin)
             ->setReporter($userAdmin)
             ->setAssignee($userAdmin)
@@ -78,7 +79,7 @@ class LoadIssueData extends AbstractFixture implements DependentFixtureInterface
             ->setCode('ISSUE_2')
             ->setSummary('Issue 2 Summary')
             ->setDescription('Issue 2 Description')
-            ->setCreatedAt()
+            ->setCreatedAt($now)
             ->setUpdatedBy($userAdmin)
             ->setReporter($userManager)
             ->setAssignee($userOperator1)
@@ -107,7 +108,7 @@ class LoadIssueData extends AbstractFixture implements DependentFixtureInterface
             ->setCode('ISSUE_3')
             ->setSummary('Issue 3 Summary')
             ->setDescription('Issue 3 Description')
-            ->setCreatedAt()
+            ->setCreatedAt($now)
             ->setUpdatedBy($userAdmin)
             ->setReporter($userManager)
             ->setAssignee($userOperator1)
@@ -136,7 +137,7 @@ class LoadIssueData extends AbstractFixture implements DependentFixtureInterface
             ->setCode('ISSUE_4')
             ->setSummary('Issue 4 Summary')
             ->setDescription('Issue 4 Description')
-            ->setCreatedAt()
+            ->setCreatedAt($now)
             ->setUpdatedBy($userAdmin)
             ->setReporter($userManager)
             ->setAssignee($userOperator2)

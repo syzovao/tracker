@@ -11,8 +11,9 @@ Oro\IssueBundle\Entity\Issue:
         summary:
             - NotBlank: ~
         createdAt:
-            - NotBlank: ~
-            - Type: \DateTime
+            - DateTime: ~
+        updatedAt:
+            - DateTime: ~
         project:
             - NotBlank: ~
 Oro\IssueBundle\Entity\IssueComment:
@@ -20,5 +21,4 @@ Oro\IssueBundle\Entity\IssueComment:
         content:
             - NotBlank: ~
         createdAt:
-            - NotBlank: ~
-            - Type: \DateTime
+            - DateTime: ~

@@ -30,8 +30,8 @@ class IssueType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('code')
-            ->add('summary')
+            ->add('code', 'text')
+            ->add('summary', 'text')
             ->add('description', 'textarea')
             ->add('issueType', 'entity', array(
                 'property_path' => 'issueType',

@@ -113,7 +113,7 @@ class IssueComment
      * @param \Oro\IssueBundle\Entity\Issue $issue
      * @return IssueComment
      */
-    public function setIssue(Issue $issue = null)
+    public function setIssue($issue = null)
     {
         $this->issue = $issue;
 
@@ -136,7 +136,7 @@ class IssueComment
      * @param \Oro\UserBundle\Entity\User $user
      * @return IssueComment
      */
-    public function setUser(User $user)
+    public function setUser($user)
     {
         $this->user = $user;
 
