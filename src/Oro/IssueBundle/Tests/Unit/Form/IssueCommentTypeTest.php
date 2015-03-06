@@ -7,7 +7,7 @@ use Oro\IssueBundle\Form\IssueCommentType;
 class IssueCommentTypeTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var IssueType
+     * @var IssueCommentType
      */
     protected $type;
 

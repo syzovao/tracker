@@ -17,19 +17,19 @@ class IssueTypeTest extends \PHPUnit_Framework_TestCase
 
     public function testGetCode()
     {
-        $this->assertTrue($this->object->getCode() == $this->code);
+        $this->assertTrue($this->obj->getCode() == $this->code);
     }
 
     public function testGetSetName()
     {
-        $this->object->setName($this->name);
-        $this->assertTrue($this->object->getName() == $this->name);
+        $this->obj->setName($this->name);
+        $this->assertTrue($this->obj->getName() == $this->name);
     }
 
     public function testGetSetPriority()
     {
         $priority = 10;
-        $this->object->setPriority($priority);
-        $this->assertTrue($this->object->getPriority() == $priority);
+        $this->obj->setPriority($priority);
+        $this->assertTrue($this->obj->getPriority() == $priority);
     }
 }

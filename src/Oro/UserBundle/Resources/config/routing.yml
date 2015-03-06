@@ -1,6 +1,6 @@
 oro_user_index:
-    path:     /index
-    defaults: { _controller: OroUserBundle:Default:index }
+    path:     /
+    defaults: { _controller: OroUserBundle:Default:dashboard }
 
 oro_user:
     resource: "@OroUserBundle/Controller"

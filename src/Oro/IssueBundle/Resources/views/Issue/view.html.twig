@@ -57,7 +57,13 @@
                     <td>
                         <ul>
                             {% for user in entity.collaborators %}
-                                <li><a href="{{ path('oro_user_view', { 'id': user.id }) }}">{{ user.username}}</a></li>
+                                <li>
+                                    {% if is_granted('VIEW', user) %}
+                                        <a href="{{ path('oro_user_view', { 'id': user.id }) }}">{{ user.username }}</a>
+                                    {% else %}
+                                        {{ user.username }}
+                                    {% endif %}
+                                </li>
                             {% endfor %}
                         </ul>
                     </td>

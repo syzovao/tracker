@@ -4,7 +4,12 @@
             <p> {{ 'issue.activity.label_activity'|trans }}: {{ activity.code }}</p>
             <p> {{ activity.description }} </p>
             <p> <a href="{{ path('oro_issue_view', { 'id': activity.issue.id }) }}">{{ activity.issue}}</a> : {{ activity.issue.summary}}</p>
-            <p> {{ 'issue.activity.fields.changed_by'|trans }}: <a href="{{ path('oro_user_view', { 'id': activity.user.id }) }}">{{ activity.user}}</a>
+            <p> {{ 'issue.activity.fields.changed_by'|trans }}:
+                {% if is_granted('VIEW', activity.user) %}
+                    <a href="{{ path('oro_user_view', { 'id': activity.user.id }) }}">{{ activity.user }}</a>
+                {% else %}
+                    {{ activity.user }}
+                {% endif %}
              {% if activity.createdAt %}{{ activity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</p>
         </li>
     {% endfor %}

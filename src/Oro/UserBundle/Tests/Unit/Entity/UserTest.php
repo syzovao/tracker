@@ -24,7 +24,6 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
     public function getSetDataProvider()
     {
-        $role = $this->getMock('Oro\UserBundle\Entity\Role');
         $project = $this->getMock('Oro\ProjectBundle\Entity\Project');
 
         return array(

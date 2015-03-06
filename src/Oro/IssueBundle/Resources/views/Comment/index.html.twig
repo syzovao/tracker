@@ -3,7 +3,11 @@
         <li class="list-group-item">
             <span class="glyphicon glyphicon-comment"></span>
             {{ 'issue.comment.posted_by'|trans }}
-            <a href="{{ path('oro_user_view', { 'id': comment.user.id }) }}">{{ comment.user}}</a>
+            {% if is_granted('VIEW', comment.user) %}
+                <a href="{{ path('oro_user_view', { 'id': comment.user.id }) }}">{{ comment.user}}</a>
+            {% else %}
+                {{ comment.user }}
+            {% endif %}
             at {% if comment.createdAt %}{{ comment.createdAt|date('Y-m-d H:i:s') }}{% endif %}
             <div class="pull-right">
                 {% if is_granted('EDIT', comment) %}

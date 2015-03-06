@@ -60,13 +60,6 @@ class IssueTypeTest extends \PHPUnit_Framework_TestCase
             $counter++;
         }
 
-        $currentUser = $this->getMockBuilder('Oro\UserBundle\Entity\User')
-            ->disableOriginalConstructor()->getMock();
-
-        $currentUser->expects($this->once())
-            ->method('getRole')
-            ->will($this->returnValue('ROLE_ADMIN'));
-
         $this->type->buildForm($builder, array());
     }
 }

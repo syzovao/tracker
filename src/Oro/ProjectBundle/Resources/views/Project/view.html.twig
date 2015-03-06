@@ -3,9 +3,11 @@
 {% block body -%}
     <h1 class="page-header">{{ 'project.label_project'|trans }}: {{ entity.name }}</h1>
     <ul class="nav nav-pills">
-        <li role="presentation"><a href="{{ path('oro_project_create')}}">{{ 'buttons.create'|trans }}</a></li>
-        <li role="presentation"><a href="{{ path('oro_project_update', { 'id': entity.id }) }}">{{ 'buttons.edit'|trans }}</a></li>
-        <li>{{ form(delete_form) }}</li>
+        {% if is_granted('MODIFY', entity) %}
+            <li role="presentation"><a href="{{ path('oro_project_create')}}">{{ 'buttons.create'|trans }}</a></li>
+            <li role="presentation"><a href="{{ path('oro_project_update', { 'id': entity.id }) }}">{{ 'buttons.edit'|trans }}</a></li>
+            <li>{{ form(delete_form) }}</li>
+        {% endif %}
     </ul>
     <div class="row">
         <div class="col-md-12">
@@ -32,7 +34,13 @@
                     <td>
                         <ul>
                             {% for user in entity.users %}
-                                <li><a href="{{ path('oro_user_view', { 'id': user.id }) }}">{{ user.username}}</a></li>
+                                <li>
+                                    {% if is_granted('VIEW', user) %}
+                                        <a href="{{ path('oro_user_view', { 'id': user.id }) }}">{{ user.username}}</a>
+                                    {% else %}
+                                        {{ user.username}}
+                                    {% endif %}
+                                </li>
                             {% endfor %}
                         </ul>
                     </td>
